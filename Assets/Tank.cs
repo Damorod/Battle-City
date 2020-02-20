@@ -5,19 +5,35 @@ using UnityEngine;
 public class Tank : MonoBehaviour
 {
     // Start is called before the first frame update
+
     float height;
     float widht;
-    public Rigidbody2D r;
+    public GameObject projectile;
+    public Transform barril;
+    private Vector2 direccion;
+    private float angulo;
+    private Rigidbody2D r;
+
     void Start()
     {
+
         height = transform.localScale.y;
         widht = transform.localScale.x;
+        r = this.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        direccion = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        angulo = Mathf.Atan2(direccion.y, direccion.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, angulo - 90f);
         move();
+        if (Input.GetMouseButtonDown(0))
+        {
+            shoot();
+        }
     }
 
     void move()
@@ -36,6 +52,14 @@ public class Tank : MonoBehaviour
             x = 0;
         }
         r.AddForce(new Vector2(x, y));
-        //transform.Translate(x, y, 0);
     }
+
+    void shoot()
+    {
+        GameObject pro = Instantiate(projectile, barril.position, barril.rotation);
+        pro.GetComponent<Rigidbody2D>().velocity = barril.up * 10f;
+
+    }
+
 }
+

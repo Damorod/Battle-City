@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 110042598}
   m_Layer: 0
   m_Name: bot
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 330613203}
   m_Layer: 0
   m_Name: top
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -795,7 +795,7 @@ GameObject:
   - component: {fileID: 660063484}
   m_Layer: 0
   m_Name: right
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1317,6 +1317,36 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &949570217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 949570218}
+  m_Layer: 0
+  m_Name: Salida
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &949570218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949570217}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.48199987, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children: []
+  m_Father: {fileID: 1593315641}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &994126776
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,7 +1360,7 @@ GameObject:
   - component: {fileID: 994126779}
   m_Layer: 0
   m_Name: right
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1783,7 +1813,7 @@ GameObject:
   - component: {fileID: 1283780477}
   m_Layer: 0
   m_Name: BaseEnemy
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1870,7 +1900,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1274f84a8dab54740a121af3331e4777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  r: {fileID: 1593315637}
+  projectile: {fileID: 7939677983437762443, guid: 019b4783c22b4f4489b29430f9f2c71e,
+    type: 3}
+  barril: {fileID: 949570218}
+--- !u!4 &1593315641 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1697286676323173757, guid: a584c45aefda30849906a4866aa241e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1697286675224794187}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1652427361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,7 +1920,7 @@ GameObject:
   - component: {fileID: 1652427362}
   m_Layer: 0
   m_Name: Base
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2024,7 +2062,7 @@ GameObject:
   - component: {fileID: 1770162208}
   m_Layer: 0
   m_Name: left
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2452,7 +2490,7 @@ GameObject:
   - component: {fileID: 1846760926}
   m_Layer: 0
   m_Name: left
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2606,6 +2644,11 @@ PrefabInstance:
     - target: {fileID: 1697286676323173757, guid: a584c45aefda30849906a4866aa241e6,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697286676323173758, guid: a584c45aefda30849906a4866aa241e6,
+        type: 3}
+      propertyPath: m_SpriteSortPoint
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1697286676323173759, guid: a584c45aefda30849906a4866aa241e6,
