@@ -8,12 +8,12 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (transform.position.y < Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).y || 
             (transform.position.x > Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).x))
         {
@@ -26,6 +26,9 @@ public class Projectile : MonoBehaviour
         if (coll.gameObject.CompareTag("Wall"))
         {
             Destroy(gameObject);
+        }
+        if (coll.gameObject.CompareTag("Enemy"))
+        {
         }
     }
 }
