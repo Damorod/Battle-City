@@ -13,9 +13,11 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (transform.position.y < Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).y || 
-            (transform.position.x > Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).x))
+        Vector3 minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
+        Vector3 maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        Vector3 a = new Vector3(Mathf.Clamp(transform.position.x, minScreenBounds.x + transform.localScale.x / 2, maxScreenBounds.x - transform.localScale.x / 2),
+            Mathf.Clamp(transform.position.y, minScreenBounds.y + transform.localScale.y / 2, maxScreenBounds.y - transform.localScale.y / 2), transform.position.z);
+        if(transform.position.x < a.x || transform.position.x > a.x || transform.position.y < a.y || transform.position.y > a.y)
         {
             Destroy(gameObject);
         }
@@ -29,6 +31,8 @@ public class Projectile : MonoBehaviour
         }
         if (coll.gameObject.CompareTag("Enemy"))
         {
+            coll.gameObject.GetComponent<TankEnemy>().life--;
+            Destroy(gameObject);
         }
     }
 }

@@ -14,6 +14,7 @@ public class TankEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(life);
         if (life == 0)
         {
             Destroy(gameObject);

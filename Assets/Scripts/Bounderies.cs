@@ -5,6 +5,8 @@ using UnityEngine;
 public class Bounderies : MonoBehaviour
 {
     // Start is called before the first frame update
+    Vector3 limit;
+
     void Start()
     {
 
@@ -15,7 +17,8 @@ public class Bounderies : MonoBehaviour
     {
         Vector3 minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
         Vector3 maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, minScreenBounds.x + transform.localScale.x/2, maxScreenBounds.x - transform.localScale.x/2),
-            Mathf.Clamp(transform.position.y, minScreenBounds.y+ transform.localScale.y/2, maxScreenBounds.y - transform.localScale.y/2), transform.position.z);
+        limit = new Vector3(Mathf.Clamp(transform.position.x, minScreenBounds.x + transform.localScale.x / 2, maxScreenBounds.x - transform.localScale.x / 2),
+            Mathf.Clamp(transform.position.y, minScreenBounds.y + transform.localScale.y / 2, maxScreenBounds.y - transform.localScale.y / 2), transform.position.z);
+        transform.position = limit;
     }
 }

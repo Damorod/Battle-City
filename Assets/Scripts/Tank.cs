@@ -23,7 +23,7 @@ public class Tank : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         direccion = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
