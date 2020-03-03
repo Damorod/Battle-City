@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Wall
   - Enemy
+  - ExtrasTileMap
+  - WallTileMap
+  - Ground
+  - PFire
+  - PIce
+  - CameraShake
   layers:
   - Default
   - TransparentFX
@@ -15,10 +21,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Projectile
+  - Player
+  - ProjectileEnemy
   - 
   - 
   - 
