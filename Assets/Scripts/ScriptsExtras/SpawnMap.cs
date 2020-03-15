@@ -31,7 +31,6 @@ public class SpawnMap : MonoBehaviour
             //Vector3 minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
             //Vector3 maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
             Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
-            //Debug.Log(positionSpawn);
             Collider[] hits = Physics.OverlapSphere(positionSpawn, 3f);
             if (hits.Length == 0)
             {

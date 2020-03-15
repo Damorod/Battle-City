@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public GameObject player;
     public GameObject projectile;
+    public GameObject enemySmall;
     public Transform barril;
     public Rigidbody2D r;
 
@@ -14,6 +15,8 @@ public class Enemy : MonoBehaviour
 
     public GameObject bloodStain;
     private CamShake shake;
+
+    public float speed;
 
     public int maxHealth = 50;
     public int currentHealth;
@@ -28,6 +31,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        speed = 2f;
         shake = GameObject.FindGameObjectWithTag("CameraShake").GetComponent<CamShake>();
         currentHealth = maxHealth;
         health.SetMaxHealth(maxHealth);
@@ -35,8 +39,9 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        Debug.Log(Vector3.Distance(transform.position, player.transform.position));
 
         target = inicial;
 
@@ -48,14 +53,33 @@ public class Enemy : MonoBehaviour
             Instantiate(deathParticules, transform.position, Quaternion.identity);
             Instantiate(bloodStain, transform.position, Quaternion.identity);
             Destroy(gameObject);
+            if (gameObject.CompareTag("Enemy"))
+            {
+                GameObject test = Instantiate(enemySmall, new Vector2(transform.position.x + 0.5f, transform.position.y + .5f), Quaternion.identity);
+                test.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
+                GameObject test1 = Instantiate(enemySmall, new Vector2(transform.position.x + 0.5f, transform.position.y - .5f), Quaternion.identity);
+                test1.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
+                GameObject test2 = Instantiate(enemySmall, new Vector2(transform.position.x - 0.5f, transform.position.y + .5f), Quaternion.identity);
+                test2.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
+                GameObject test3 = Instantiate(enemySmall, new Vector2(transform.position.x - 0.5f, transform.position.y - .5f), Quaternion.identity);
+                test3.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
+            }
         }
+           
         else
         {
             RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up);
             if (!hitInfo.collider.CompareTag("ExtrasTileMap"))
             {
-                move();
-                if (!attacking && hitInfo.collider.CompareTag("Player"))
+                if (Vector3.Distance(transform.position, player.transform.position) >= 2)
+                {
+                    move(player.transform.position, speed);
+                }
+                else if (Vector3.Distance(transform.position, player.transform.position) < 1.8f)
+                {
+                    move(player.transform.position, -speed);
+                }
+                if (!attacking && (hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield")))
                 {
                     StartCoroutine(attack());
                 }
@@ -70,9 +94,9 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         attacking = false;
     }
-    void move()
+    void move(Vector2 target, float speedy)
     {
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), 2f * Time.deltaTime);    
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(target.x, target.y), speedy * Time.deltaTime);
     }
 
     IEnumerator flash()
@@ -87,6 +111,36 @@ public class Enemy : MonoBehaviour
         currentHealth -= damage;
         StartCoroutine(flash());
         health.SetHealth(currentHealth);
+    }
+
+    public void slow(float sw)
+    {
+        StartCoroutine(slows(sw));
+    }
+    
+    IEnumerator slows(float s)
+    {
+        speed = s;
+        yield return new WaitForSeconds(1f);
+        speed = 2f;
+    }
+
+    public void FireDamage(int fireDamage)
+    {
+        for(int i = 0; i <=4; i++)
+        {
+            StartCoroutine(Fire(fireDamage));
+            //StartCoroutine(flash());
+            //health.SetHealth(currentHealth);
+        }
+    }
+
+    IEnumerator Fire(int dmg)
+    {
+        currentHealth -= dmg;
+        StartCoroutine(flash());
+        health.SetHealth(currentHealth);
+        yield return new WaitForSeconds(1f);
     }
 
     private void OnDrawGizmosSelected()

@@ -25,7 +25,13 @@ public class ProjectileEnemy : MonoBehaviour
         }
         if (coll.gameObject.CompareTag("Player"))
         {
-            coll.gameObject.GetComponent<Player>().TakeDamage(5);
+            coll.gameObject.GetComponent<Player>().TakeDamage(20);
+            Destroy(gameObject);
+        }
+        if (coll.gameObject.CompareTag("Shield"))
+        {
+            coll.gameObject.GetComponentInParent<Player>().TakeDamageShield(5);
+            //coll.gameObject.GetComponent<Player>().TakeDamageShield(5);
             Destroy(gameObject);
         }
     }

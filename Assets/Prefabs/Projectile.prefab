@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_Sprite: {fileID: -4179277160653790916, guid: 87debb025ff6d7947a14a96c78371054,
     type: 3}
-  m_Color: {r: 0, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10fb5e2ccde25284da84d359f13e184b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: 2
+  color: 0
   r: {fileID: -8199250722556514589}
   explosion: {fileID: 933758273666332277, guid: f29a5b1f79cbcf14f920823478f69275,
     type: 3}
@@ -211,7 +211,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 1, g: 0, b: 0, a: 0}
       key3: {r: 1, g: 0.04895149, b: 0.04895149, a: 0}

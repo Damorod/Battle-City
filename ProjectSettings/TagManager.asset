@@ -12,6 +12,10 @@ TagManager:
   - PFire
   - PIce
   - CameraShake
+  - EnemyCircle
+  - EnemySmall
+  - EnemyTriangule
+  - Shield
   layers:
   - Default
   - TransparentFX

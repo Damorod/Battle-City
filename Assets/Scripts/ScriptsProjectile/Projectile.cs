@@ -47,8 +47,8 @@ public class Projectile : MonoBehaviour
             }
             Destroy(gameObject);
         }
-        if (coll.gameObject.CompareTag("Enemy"))
-        {
+        if (coll.gameObject.CompareTag("Enemy") || coll.gameObject.CompareTag("EnemySmall"))
+        {        
             switch (color)
             {
                 case 0:
@@ -57,10 +57,52 @@ public class Projectile : MonoBehaviour
                     break;
                 case 1:
                     coll.gameObject.GetComponent<Enemy>().TakeDamage(6);
+                    coll.gameObject.GetComponent<Enemy>().FireDamage(1);
                     Instantiate(fireExplosion, transform.position, Quaternion.identity);
                     break;
                 case 2:
                     coll.gameObject.GetComponent<Enemy>().TakeDamage(4);
+                    coll.gameObject.GetComponent<Enemy>().slow(0.5f);
+                    Instantiate(iceExplosion, transform.position, Quaternion.identity);
+                    break;
+            }
+            Destroy(gameObject);
+        }
+        if (coll.gameObject.CompareTag("EnemyCircle"))
+        {
+            switch (color)
+            {
+                case 0:
+                    coll.gameObject.GetComponent<EnemyCircle>().TakeDamage(5);
+                    Instantiate(explosion, transform.position, Quaternion.identity);
+                    break;
+                case 1:
+                    coll.gameObject.GetComponent<EnemyCircle>().TakeDamage(6);
+                    Instantiate(fireExplosion, transform.position, Quaternion.identity);
+                    break;
+                case 2:
+                    coll.gameObject.GetComponent<EnemyCircle>().TakeDamage(4);
+                    coll.gameObject.GetComponent<EnemyCircle>().slow(0.5f);
+                    Instantiate(iceExplosion, transform.position, Quaternion.identity);
+                    break;
+            }
+            Destroy(gameObject);
+        }
+        if (coll.gameObject.CompareTag("EnemyTriangule"))
+        {
+            switch (color)
+            {
+                case 0:
+                    coll.gameObject.GetComponent<EnemyTriangule>().TakeDamage(5);
+                    Instantiate(explosion, transform.position, Quaternion.identity);
+                    break;
+                case 1:
+                    coll.gameObject.GetComponent<EnemyTriangule>().TakeDamage(6);
+                    Instantiate(fireExplosion, transform.position, Quaternion.identity);
+                    break;
+                case 2:
+                    coll.gameObject.GetComponent<EnemyTriangule>().TakeDamage(4);
+                    coll.gameObject.GetComponent<EnemyTriangule>().slow(0.5f);
                     Instantiate(iceExplosion, transform.position, Quaternion.identity);
                     break;
             }
