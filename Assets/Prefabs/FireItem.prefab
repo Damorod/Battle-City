@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 3046532427811851229}
   - component: {fileID: 3046532427811851230}
   - component: {fileID: 3046532427811851231}
+  - component: {fileID: 8279474979575879906}
   m_Layer: 0
-  m_Name: P_Fire_0
+  m_Name: FireItem
   m_TagString: PFire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,3 +131,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &8279474979575879906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3046532427811851224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c6687a8111bcc448d5f8296003ab4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -16,6 +16,8 @@ TagManager:
   - EnemySmall
   - EnemyTriangule
   - Shield
+  - BossTriangule
+  - BossCube
   layers:
   - Default
   - TransparentFX

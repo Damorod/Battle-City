@@ -9,11 +9,9 @@ public class EnemyCircle : MonoBehaviour
     public Transform barril;
     public Vector3 target;
 
-    public int maxHealth = 50;
-    public int currentHealth;
-
     public float speed;
 
+    public HealthSystem healthSystem;
     public HealthBarEnemy health;
 
     public GameObject deathEfect;
@@ -25,17 +23,17 @@ public class EnemyCircle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 5f;
+        speed = 3f;
         shake = GameObject.FindGameObjectWithTag("CameraShake").GetComponent<CamShake>();
         target = player.transform.position;
-        currentHealth = maxHealth;
-        health.SetMaxHealth(maxHealth);
+        healthSystem.SetMaxHealth(50);
+        health.SetMaxHealth(healthSystem.GetMaxHealth());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentHealth < 0)
+        if (healthSystem.GetCurrentHealth() < 0)
         {
             shake.shaker();
             Instantiate(deathEfect, transform.position, Quaternion.identity);
@@ -46,8 +44,8 @@ public class EnemyCircle : MonoBehaviour
         else
         {
             transform.up = player.transform.position - transform.position;
-            RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up);
-            if (hitInfo.collider.CompareTag("ExtrasTileMap"))
+            RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up, 2);
+            if (hitInfo.collider != null && (hitInfo.collider.CompareTag("ExtrasTileMap") || hitInfo.collider.CompareTag("EnemyCircle")))
             {
                 target = transform.position;
             }
@@ -71,11 +69,11 @@ public class EnemyCircle : MonoBehaviour
         }
     }
 
-        public void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        healthSystem.TakeDamage(damage);
         StartCoroutine(flash());
-        health.SetHealth(currentHealth);
+        health.SetHealth(healthSystem.GetCurrentHealth());
     }
 
     public void slow(float sw)

@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
-
-    float height;
-    float widht;
     public GameObject projectile;
     public Transform barril;
     private Vector2 direccion;
@@ -23,28 +20,25 @@ public class Player : MonoBehaviour
 
     public FireBar bar;
 
-    public int maxHealth = 100;
-    public int currentHealth;
+    public HealthSystem health;
 
     public ShieldBar sh;
     public int maxShield = 70;
     public int currentShield;
 
     public Inventory inv;
-    public HealthBar health;
+    public HealthBar healthBar;
     void Start()
     {
+        r = this.GetComponent<Rigidbody2D>();
         shield.SetActive(false);
-        height = transform.localScale.y;
-        widht = transform.localScale.x;
         currentShield = maxShield;
-        currentHealth = maxHealth;
+        health.SetMaxHealth(100);
         typeWeapon.Add("Normal");
-        health.SetMaxHealth(maxHealth);
+        healthBar.SetMaxHealth(health.GetMaxHealth());
         sh.SetMaxShield(maxShield);
 
         projectile.GetComponent<Projectile>().changeColor(0);
-        r = this.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -118,15 +112,14 @@ public class Player : MonoBehaviour
 
     public void AddHealth(int heal)
     {
-        currentHealth += heal;
+        health.Heal(heal);
         StartCoroutine(flashHeatlh());
-        health.SetHealth(currentHealth);
+        healthBar.SetHealth(health.GetCurrentHealth());
     }
 
     public void AddShield(int heal)
     {
         currentShield += heal;
-        //StartCoroutine(flashHeatlh());
         sh.SetShield(currentShield);
     }
 
@@ -146,18 +139,16 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        health.TakeDamage(damage);
         StartCoroutine(flash());
-        health.SetHealth(currentHealth);
+        healthBar.SetHealth(health.GetCurrentHealth());
 
     }
 
     public void TakeDamageShield(int damage)
     {
         currentShield -= damage;
-        //StartCoroutine(flash());
         sh.SetShield(currentShield);
-
     }
 }
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23583076112917933}
   - component: {fileID: 2178383408928861569}
   - component: {fileID: 1115949831981219703}
+  - component: {fileID: 4285433426545579184}
   - component: {fileID: 1115949831981219706}
   m_Layer: 0
   m_Name: Player
@@ -147,12 +148,29 @@ MonoBehaviour:
   projectile: {fileID: 7939677983437762443, guid: 019b4783c22b4f4489b29430f9f2c71e,
     type: 3}
   barril: {fileID: 1115949832545297642}
+  shield: {fileID: 0}
   typeWeapon: []
   bar: {fileID: 0}
-  maxHealth: 100
-  currentHealth: 0
-  inv: {fileID: 0}
   health: {fileID: 0}
+  sh: {fileID: 0}
+  maxShield: 70
+  currentShield: 0
+  inv: {fileID: 0}
+  healthBar: {fileID: 0}
+--- !u!114 &4285433426545579184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115949831981219700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf5891b1c8043b4eb8e2b7ba65fe555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
 --- !u!114 &1115949831981219706
 MonoBehaviour:
   m_ObjectHideFlags: 0

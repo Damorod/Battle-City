@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4373502477171156610}
   - component: {fileID: 4373502477171156621}
   - component: {fileID: 4373502477171156620}
+  - component: {fileID: -9156996324217134282}
   - component: {fileID: 4373502477171156608}
   m_Layer: 0
-  m_Name: CircleEnemy
+  m_Name: EnemyCircle
   m_TagString: EnemyCircle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,6 +123,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &-9156996324217134282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4373502477171156623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf5891b1c8043b4eb8e2b7ba65fe555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
 --- !u!114 &4373502477171156608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,8 +153,8 @@ MonoBehaviour:
   player: {fileID: 0}
   barril: {fileID: 4373502477378862179}
   target: {x: 0, y: 0, z: 0}
-  maxHealth: 50
-  currentHealth: 0
+  speed: 0
+  healthSystem: {fileID: -9156996324217134282}
   health: {fileID: 4373502477333178226}
   deathEfect: {fileID: 2140844229528831877, guid: c1eee0f00e4dbbe478c88ae180ff363a,
     type: 3}

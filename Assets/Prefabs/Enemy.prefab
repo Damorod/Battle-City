@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 1555021099836805390}
   - component: {fileID: 5328485712200493269}
   - component: {fileID: 5328485712200493270}
+  - component: {fileID: 814243638980647076}
   - component: {fileID: 5328485712200493226}
   - component: {fileID: 5328485712200493225}
   m_Layer: 8
@@ -213,6 +214,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.94030666, y: 0.9134815}
   m_EdgeRadius: 0
+--- !u!114 &814243638980647076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3143992322890948807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf5891b1c8043b4eb8e2b7ba65fe555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
 --- !u!114 &5328485712200493226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,9 +253,9 @@ MonoBehaviour:
     type: 3}
   bloodStain: {fileID: 7580695427182302955, guid: 69acd0d077619a349abf1ee8a54c05ed,
     type: 3}
-  maxHealth: 50
-  currentHealth: 0
-  health: {fileID: 9165758969276789826}
+  speed: 0
+  healthSystem: {fileID: 814243638980647076}
+  healthBar: {fileID: 9165758969276789826}
 --- !u!114 &5328485712200493225
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 6404786010741038341}
   - component: {fileID: 6404786010741038342}
   - component: {fileID: 6404786010741038340}
+  - component: {fileID: -4631895818788938023}
   - component: {fileID: 6404786010741038338}
   - component: {fileID: 6404786010741038339}
   m_Layer: 0
@@ -238,9 +239,22 @@ MonoBehaviour:
     type: 3}
   deathParticules: {fileID: 6693834121063239736, guid: b1605256d23fcc049890c41f1a947b50,
     type: 3}
-  maxHealth: 50
-  currentHealth: 0
+  healthSystem: {fileID: -4631895818788938023}
   health: {fileID: 6404786011263603289}
+--- !u!114 &-4631895818788938023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6404786010741038343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf5891b1c8043b4eb8e2b7ba65fe555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
 --- !u!50 &6404786010741038338
 Rigidbody2D:
   serializedVersion: 4
@@ -515,8 +529,7 @@ MonoBehaviour:
     type: 3}
   deathParticules: {fileID: 6693834121063239736, guid: b1605256d23fcc049890c41f1a947b50,
     type: 3}
-  maxHealth: 50
-  currentHealth: 0
+  healthSystem: {fileID: 0}
   health: {fileID: 6404786011263603289}
 --- !u!212 &6404786010980328677
 SpriteRenderer:

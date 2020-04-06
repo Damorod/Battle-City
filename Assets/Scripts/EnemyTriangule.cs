@@ -18,8 +18,9 @@ public class EnemyTriangule : MonoBehaviour
     public GameObject deathEfect;
     public GameObject deathParticules;
 
-    public int maxHealth = 50;
-    public int currentHealth;
+    public int numberCode;
+
+    public HealthSystem healthSystem;
 
     public HealthBarEnemy health;
 
@@ -29,17 +30,15 @@ public class EnemyTriangule : MonoBehaviour
         speed = 2f;
         shootRate = 2;
         shake = GameObject.FindGameObjectWithTag("CameraShake").GetComponent<CamShake>();
-        currentHealth = maxHealth;
-        health.SetMaxHealth(maxHealth);
+        healthSystem.SetMaxHealth(50);
+        health.SetMaxHealth(healthSystem.GetMaxHealth());
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Time.time + " :Time");
-        Debug.Log(m_shootRateTimeStamp + " Shoot");
 
-        if (currentHealth < 0)
+        if (healthSystem.GetCurrentHealth() < 0)
         {
             shake.shaker();
             Instantiate(deathEfect, transform.position, Quaternion.identity);
@@ -50,15 +49,15 @@ public class EnemyTriangule : MonoBehaviour
         else
         {
             transform.up = player.transform.position - transform.position;
-            RaycastHit2D hit = Physics2D.Raycast(barril.position, barril.up);
+            RaycastHit2D hit = Physics2D.Raycast(barril.position, barril.up, 5);
 
-            if (!hit.collider.CompareTag("ExtrasTileMap"))
+            if (hit.collider != null && !hit.collider.CompareTag("ExtrasTileMap"))
             {
-                if (Vector3.Distance(transform.position, player.transform.position) >= 2)
+                if (Vector3.Distance(transform.position, player.transform.position) >= 2 && !hit.collider.CompareTag("EnemyTriangule"))
                 {
                     move(player.transform.position, speed);
                 }
-                else if(Vector3.Distance(transform.position, player.transform.position) < 1.8f)
+                else if(Vector3.Distance(transform.position, player.transform.position) < 1.9f && !hit.collider.CompareTag("EnemyTriangule"))
                 {
                     move(player.transform.position, -speed);
                 }
@@ -70,6 +69,14 @@ public class EnemyTriangule : MonoBehaviour
                     {
                         lr.SetPosition(0, new Vector3(barril.position.x, barril.position.y, -1));
                         lr.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -1));
+                        if (hit.collider.CompareTag("Player"))
+                        {
+                            hit.collider.GetComponent<Player>().TakeDamage(1);
+                        }
+                        else
+                        {
+                            hit.collider.GetComponent<Player>().TakeDamageShield(1);
+                        }
                         StartCoroutine(attack(hit));
                     }
                     else
@@ -77,7 +84,15 @@ public class EnemyTriangule : MonoBehaviour
                         lr.enabled = false;
                     }
                 }
-            }        
+                else
+                {
+                    lr.enabled = false;
+                }
+            }
+            else
+            {
+                lr.enabled = false;
+            }
         }
     }
 
@@ -95,15 +110,16 @@ public class EnemyTriangule : MonoBehaviour
 
     IEnumerator attack(RaycastHit2D hit)
     {
+
         yield return new WaitForSeconds(.5f);
         m_shootRateTimeStamp =+ Time.time + shootRate;
     }
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        healthSystem.TakeDamage(damage);
         StartCoroutine(flash());
-        health.SetHealth(currentHealth);
+        health.SetHealth(healthSystem.GetCurrentHealth());
     }
 
     IEnumerator flash()

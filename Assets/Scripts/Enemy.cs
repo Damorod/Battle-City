@@ -16,12 +16,13 @@ public class Enemy : MonoBehaviour
     public GameObject bloodStain;
     private CamShake shake;
 
+    public int numberCode;
+
     public float speed;
 
-    public int maxHealth = 50;
-    public int currentHealth;
+    public HealthSystem healthSystem;
 
-    public HealthBarEnemy health;
+    public HealthBarEnemy healthBar;
 
     bool attacking;
 
@@ -33,49 +34,47 @@ public class Enemy : MonoBehaviour
     {
         speed = 2f;
         shake = GameObject.FindGameObjectWithTag("CameraShake").GetComponent<CamShake>();
-        currentHealth = maxHealth;
-        health.SetMaxHealth(maxHealth);
+        healthSystem.SetMaxHealth(50);
+        healthBar.SetMaxHealth(healthSystem.GetMaxHealth());
         inicial = transform.position;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(Vector3.Distance(transform.position, player.transform.position));
 
         target = inicial;
 
-        transform.up = player.transform.position - transform.position;
-        if (currentHealth < 0)
+        if (healthSystem.GetCurrentHealth() < 0)
         {
             shake.shaker();
             Instantiate(deathEfect, transform.position, Quaternion.identity);
             Instantiate(deathParticules, transform.position, Quaternion.identity);
             Instantiate(bloodStain, transform.position, Quaternion.identity);
             Destroy(gameObject);
-            if (gameObject.CompareTag("Enemy"))
-            {
-                GameObject test = Instantiate(enemySmall, new Vector2(transform.position.x + 0.5f, transform.position.y + .5f), Quaternion.identity);
-                test.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
-                GameObject test1 = Instantiate(enemySmall, new Vector2(transform.position.x + 0.5f, transform.position.y - .5f), Quaternion.identity);
-                test1.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
-                GameObject test2 = Instantiate(enemySmall, new Vector2(transform.position.x - 0.5f, transform.position.y + .5f), Quaternion.identity);
-                test2.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
-                GameObject test3 = Instantiate(enemySmall, new Vector2(transform.position.x - 0.5f, transform.position.y - .5f), Quaternion.identity);
-                test3.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
-            }
-        }
-           
+            //if (gameObject.CompareTag("Enemy"))
+            //{
+            //    GameObject test = Instantiate(enemySmall, new Vector2(transform.position.x + 0.5f, transform.position.y + .5f), Quaternion.identity);
+            //    test.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
+            //    //GameObject test1 = Instantiate(enemySmall, new Vector2(transform.position.x + 0.5f, transform.position.y - .5f), Quaternion.identity);
+            //    //test1.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
+            //    //GameObject test2 = Instantiate(enemySmall, new Vector2(transform.position.x - 0.5f, transform.position.y + .5f), Quaternion.identity);
+            //    //test2.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
+            //    GameObject test3 = Instantiate(enemySmall, new Vector2(transform.position.x - 0.5f, transform.position.y - .5f), Quaternion.identity);
+            //    test3.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
+            //}
+        }          
         else
         {
-            RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up);
-            if (!hitInfo.collider.CompareTag("ExtrasTileMap"))
+            transform.up = player.transform.position - transform.position;
+            RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up, 7);
+            if (hitInfo.collider != null && !hitInfo.collider.CompareTag("ExtrasTileMap"))
             {
-                if (Vector3.Distance(transform.position, player.transform.position) >= 2)
+                if (Vector3.Distance(transform.position, player.transform.position) >= 2 && !hitInfo.collider.CompareTag("Enemy"))
                 {
                     move(player.transform.position, speed);
                 }
-                else if (Vector3.Distance(transform.position, player.transform.position) < 1.8f)
+                else if (Vector3.Distance(transform.position, player.transform.position) < 1.8f && !hitInfo.collider.CompareTag("Enemy"))
                 {
                     move(player.transform.position, -speed);
                 }
@@ -85,6 +84,11 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void setNumber(int num)
+    {
+        numberCode = num;
     }
     IEnumerator attack()
     {
@@ -108,9 +112,9 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        healthSystem.TakeDamage(damage);
         StartCoroutine(flash());
-        health.SetHealth(currentHealth);
+        healthBar.SetHealth(healthSystem.GetCurrentHealth());
     }
 
     public void slow(float sw)
@@ -130,16 +134,14 @@ public class Enemy : MonoBehaviour
         for(int i = 0; i <=4; i++)
         {
             StartCoroutine(Fire(fireDamage));
-            //StartCoroutine(flash());
-            //health.SetHealth(currentHealth);
         }
     }
 
     IEnumerator Fire(int dmg)
     {
-        currentHealth -= dmg;
+        healthSystem.TakeDamage(dmg);
         StartCoroutine(flash());
-        health.SetHealth(currentHealth);
+        healthBar.SetHealth(healthSystem.GetCurrentHealth());
         yield return new WaitForSeconds(1f);
     }
 

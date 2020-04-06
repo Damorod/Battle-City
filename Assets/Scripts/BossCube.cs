@@ -13,11 +13,27 @@ public class BossCube : MonoBehaviour
     public float speed;
 
     bool attacking;
+    bool attackingRage = false;
+
+    public HealthSystem healthSystem;
+
+    public GameObject deathEfect;
+    public GameObject deathParticules;
+
+    private CamShake shake;
+
+    public HealthBarEnemy healthBar;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        healthSystem.SetMaxHealth(150);
+        shake = GameObject.FindGameObjectWithTag("CameraShake").GetComponent<CamShake>();
+
+        healthBar.SetMaxHealth(healthSystem.GetMaxHealth());
+
         speed = 2f;   
     }
 
@@ -25,24 +41,26 @@ public class BossCube : MonoBehaviour
     void FixedUpdate()
     {
         transform.up = player.transform.position - transform.position;
-        RaycastHit2D hitInfo = Physics2D.Raycast(barrilTop.position, barrilTop.up);
-        if (!hitInfo.collider.CompareTag("ExtrasTileMap"))
+        if (healthSystem.GetCurrentHealth() < 0)
         {
-            if (Vector3.Distance(transform.position, player.transform.position) >= 2)
-            {
-                move(player.transform.position, speed);
-            }
-            else if (Vector3.Distance(transform.position, player.transform.position) < 1.8f)
-            {
-                move(player.transform.position, -speed);
-            }
-            if (!attacking && hitInfo.collider.CompareTag("Player"))
-            {
-                StartCoroutine(attack());
-            }
+            shake.shaker();
+            Instantiate(deathEfect, transform.position, Quaternion.identity);
+            Instantiate(deathParticules, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+        else if (healthSystem.GetCurrentHealth() < 75)
+        {
+            GetComponent<Animator>().SetBool("AttackRage", true);
         }
     }
 
+    public void At()
+    {
+        if (!attacking)
+        {
+            StartCoroutine(attack());
+        }
+    }
     IEnumerator attack()
     {
         attacking = true;
@@ -59,8 +77,44 @@ public class BossCube : MonoBehaviour
         attacking = false;
     }
 
-    void move(Vector2 target, float speedy)
+    public void AtRage()
     {
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(target.x, target.y), speedy * Time.deltaTime);
+        if (!attackingRage)
+        {
+            StartCoroutine(AttackRage());
+        }
+    }
+    IEnumerator AttackRage()
+    {
+        RaycastHit2D hitInfo = Physics2D.Raycast(barrilTop.position, barrilTop.up);
+        if (hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield"))
+        {
+            attacking = true;
+            GameObject pro = Instantiate(projectile, barrilTop.position, barrilTop.rotation);
+            GameObject pro1 = Instantiate(projectile, barrilLeft.position, barrilLeft.rotation);
+            GameObject pro2 = Instantiate(projectile, barrilRight.position, barrilRight.rotation);
+
+            pro.GetComponent<Rigidbody2D>().velocity = barrilTop.up * 10f;
+            pro1.GetComponent<Rigidbody2D>().velocity = barrilLeft.up * 10f;
+            pro2.GetComponent<Rigidbody2D>().velocity = barrilRight.up * 10f;
+
+
+            yield return new WaitForSeconds(0.1f);
+            attacking = false;
+        }
+    }
+
+    IEnumerator flash()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.05f);
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        healthSystem.TakeDamage(damage);
+        StartCoroutine(flash());
+        healthBar.SetHealth(healthSystem.GetCurrentHealth());
     }
 }
