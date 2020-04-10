@@ -130,7 +130,28 @@ public class Projectile : MonoBehaviour
             }
             Destroy(gameObject);
         }
-        if (coll.gameObject.CompareTag("EnemyTriangule"))
+
+        if (coll.gameObject.CompareTag("SmallEnemyCircle"))
+        {
+            switch (color)
+            {
+                case 0:
+                    coll.gameObject.GetComponent<SmallCircle>().TakeDamage(5);
+                    Instantiate(explosion, transform.position, Quaternion.identity);
+                    break;
+                case 1:
+                    coll.gameObject.GetComponent<SmallCircle>().TakeDamage(6);
+                    Instantiate(fireExplosion, transform.position, Quaternion.identity);
+                    break;
+                case 2:
+                    coll.gameObject.GetComponent<SmallCircle>().TakeDamage(4);
+                    Instantiate(iceExplosion, transform.position, Quaternion.identity);
+                    break;
+            }
+            Destroy(gameObject);
+        }
+
+            if (coll.gameObject.CompareTag("EnemyTriangule"))
         {
             switch (color)
             {

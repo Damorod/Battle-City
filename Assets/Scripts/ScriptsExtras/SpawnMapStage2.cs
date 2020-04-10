@@ -19,6 +19,8 @@ public class SpawnMapStage2 : MonoBehaviour
     float randomHealth;
     int maxHealth;
 
+    bool bossSpawned;
+    public GameObject bossLife;
     //bool shieldSpawned;
     //bool healthSpawned;
 
@@ -32,6 +34,13 @@ public class SpawnMapStage2 : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (GameObject.FindGameObjectWithTag("EnemyCircle") == null && !bossSpawned)
+        {
+
+            bossCircle.SetActive(true);
+            bossLife.SetActive(true);
+            bossSpawned = true;
+        }
         if (maxHealth <= 2)
         {
             if ((int)Time.time == randomHealth)
@@ -60,7 +69,7 @@ public class SpawnMapStage2 : MonoBehaviour
 
     void spawnCircle()
     {
-        if (maxEnemys < 10)
+        if (maxEnemys < 1)
         {
             Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
             Collider[] hits = Physics.OverlapSphere(new Vector3(positionSpawn.x, positionSpawn.y, 0), 3f);

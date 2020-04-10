@@ -8,14 +8,19 @@ public class BossMovementCube : StateMachineBehaviour
     public Transform transform;
     public Transform barrilTop;
     public Rigidbody2D r;
+    public Vector3 target;
+    public float speed;
+
     //public LineRenderer lr;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        speed = 3f;
         player = GameObject.FindGameObjectWithTag("Player");
         transform = animator.GetComponent<Transform>();
         r = animator.GetComponent<Rigidbody2D>();
-        barrilTop = GameObject.Find("FirePoint").GetComponent<Transform>();
+        barrilTop = GameObject.Find("Barril").GetComponent<Transform>();
+        target = player.transform.position;
         //lr = GameObject.Find("Line").GetComponent<LineRenderer>();
     }
 
@@ -23,21 +28,18 @@ public class BossMovementCube : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         transform.up = player.transform.position - transform.position;
-        RaycastHit2D hitInfo = Physics2D.Raycast(barrilTop.position, barrilTop.up);
-        if (!hitInfo.collider.CompareTag("ExtrasTileMap"))
+        RaycastHit2D hitInfo = Physics2D.Raycast(barrilTop.position, barrilTop.up, 2);
+        if (hitInfo.collider != null && (hitInfo.collider.CompareTag("ExtrasTileMap") || hitInfo.collider.CompareTag("EnemyCircle")))
         {
-            if (Vector3.Distance(transform.position, player.transform.position) >= 2)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), 3f * Time.deltaTime);
-            }
-            else if (Vector3.Distance(transform.position, player.transform.position) < 1.8f)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), -3f * Time.deltaTime);
-            }
-            if (hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield"))
-            {
-                animator.SetTrigger("Attack");
-            }
+            target = transform.position;
+        }
+        else if ((target == transform.position))
+        {
+            target = player.transform.position;
+        }
+        else
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
         }
     }
 

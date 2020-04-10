@@ -8,10 +8,12 @@ public class HealthSystem : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
 
+
     public void SetMaxHealth(int health)
     {
         maxHealth = health;
         currentHealth = health;
+
     }
 
     public int GetMaxHealth()

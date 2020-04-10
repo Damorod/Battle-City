@@ -18,6 +18,7 @@ TagManager:
   - Shield
   - BossTriangule
   - BossCube
+  - SmallEnemyCircle
   layers:
   - Default
   - TransparentFX
