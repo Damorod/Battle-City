@@ -57,16 +57,16 @@ public class Projectile : MonoBehaviour
             switch (color)
             {
                 case 0:
-                    coll.gameObject.GetComponent<BossCube>().TakeDamage(5);
+                    coll.gameObject.GetComponent<BossCircle>().TakeDamage(5);
                     Instantiate(explosion, transform.position, Quaternion.identity);
                     break;
                 case 1:
-                    coll.gameObject.GetComponent<BossCube>().TakeDamage(6);
+                    coll.gameObject.GetComponent<BossCircle>().TakeDamage(6);
                     //coll.gameObject.GetComponent<Enemy>().FireDamage(1);
                     Instantiate(fireExplosion, transform.position, Quaternion.identity);
                     break;
                 case 2:
-                    coll.gameObject.GetComponent<BossCube>().TakeDamage(4);
+                    coll.gameObject.GetComponent<BossCircle>().TakeDamage(4);
                     //coll.gameObject.GetComponent<Enemy>().slow(0.5f);
                     Instantiate(iceExplosion, transform.position, Quaternion.identity);
                     break;

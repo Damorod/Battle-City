@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public GameObject player;
     public GameObject projectile;
-    public GameObject enemySmall;
+    //public GameObject enemySmall;
     public Transform barril;
     public Rigidbody2D r;
 
@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     public int numberCode;
 
     public float speed;
+
+    public Animator anim;
 
     public HealthSystem healthSystem;
 
@@ -66,31 +68,55 @@ public class Enemy : MonoBehaviour
         }          
         else
         {
-            transform.up = player.transform.position - transform.position;
+            if (player.transform.position.x > transform.position.x)
+            {
+                //face right
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (player.transform.position.x < transform.position.x)
+            {
+                //face left
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            barril.transform.up = player.transform.position - barril.transform.position;
+            anim.ResetTrigger("isAttacking");
             RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up, 7);
             if (hitInfo.collider != null && !hitInfo.collider.CompareTag("ExtrasTileMap"))
             {
-                if (Vector3.Distance(transform.position, player.transform.position) >= 2 && !hitInfo.collider.CompareTag("Enemy"))
+                if (Vector3.Distance(transform.position, player.transform.position) >= 2 && !hitInfo.collider.CompareTag("Enemy"))                 
                 {
+                    anim.SetBool("isRunning", true);
                     move(player.transform.position, speed);
                 }
                 else if (Vector3.Distance(transform.position, player.transform.position) < 1.8f && !hitInfo.collider.CompareTag("Enemy"))
                 {
+                    anim.SetBool("isRunning", true);
                     move(player.transform.position, -speed);
                 }
-                if (!attacking && (hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield")))
+                else
                 {
-                    StartCoroutine(attack());
+                    anim.SetBool("isRunning", false);
+                }
+                if ((hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield")))
+                {
+                    anim.SetTrigger("isAttacking");
+                    //StartCoroutine(attack());
                 }
             }
         }
+    }
+
+    public void Shoot()
+    {
+        GameObject pro = Instantiate(projectile, barril.position, Quaternion.identity);
+        pro.GetComponent<Rigidbody2D>().velocity = barril.up * 10f;
     }
 
     public void setNumber(int num)
     {
         numberCode = num;
     }
-    IEnumerator attack()
+    public IEnumerator attack()
     {
         attacking = true;
         GameObject pro = Instantiate(projectile, barril.position, barril.rotation);

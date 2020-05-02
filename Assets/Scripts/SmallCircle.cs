@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class SmallCircle : MonoBehaviour
 {
-    bool vertical;
-    float limitX = 2f;
-    float limitY = 2f;
+    public bool vertical;
+    public float limitX;
+    public float limitY;
     public Rigidbody2D rb;
 
     Vector2 nextPos;
 
     public LineRenderer lr;
 
+    public float speed;
+
     Vector3 posLr;
+
+    public Animator anim;
 
     public GameObject player;
     public HealthSystem healthSystem;
@@ -24,21 +28,17 @@ public class SmallCircle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        speed = 3f;
         posLr = transform.position;
         healthSystem.SetMaxHealth(20);
         healths.SetMaxHealth(20);
-
-        int a = Random.Range(0, 2) * 2 - 1;
-        if (a == -1)
+        if (vertical)
         {
-            vertical = true;
             nextPos = new Vector2(transform.position.x, transform.position.y + limitY);
         }
         else
         {
-            vertical = false;
             nextPos = new Vector2(transform.position.x + limitX, transform.position.y);
-
         }
     }
 
@@ -51,21 +51,23 @@ public class SmallCircle : MonoBehaviour
         }
         if (vertical)
         {
-            lr.SetPosition(0, new Vector3(transform.position.x, posLr.y + limitY, -1));
-            lr.SetPosition(1, new Vector3(transform.position.x, posLr.y - limitY, -1));
-            transform.position = Vector2.MoveTowards(transform.position, nextPos, 3f * Time.deltaTime);
+            //lr.SetPosition(0, new Vector3(transform.position.x, posLr.y + limitY, -1));
+            //lr.SetPosition(1, new Vector3(transform.position.x, posLr.y - limitY, -1));
+            transform.position = Vector2.MoveTowards(transform.position, nextPos, speed * Time.deltaTime);
             if (Vector2.Distance(transform.position, nextPos) <= 0.1)
             {
+                anim.SetBool("isRunning", true);
                 changePos();
             }
         }
         else
         {
-            lr.SetPosition(0, new Vector3(posLr.x + limitX, transform.position.y, -1));
-            lr.SetPosition(1, new Vector3(posLr.x - limitX, transform.position.y, -1));
-            transform.position = Vector2.MoveTowards(transform.position, nextPos, 3f * Time.deltaTime);
+            //lr.SetPosition(0, new Vector3(posLr.x + limitX, transform.position.y, -1));
+            //lr.SetPosition(1, new Vector3(posLr.x - limitX, transform.position.y, -1));
+            transform.position = Vector2.MoveTowards(transform.position, nextPos, speed * Time.deltaTime);
             if (Vector2.Distance(transform.position, nextPos) <= 0.1)
             {
+                anim.SetBool("isRunning", true);
                 changePos();
             }
         }
@@ -75,11 +77,11 @@ public class SmallCircle : MonoBehaviour
     {
         if (vertical)
         {
-            limitX = limit;
+            limitY = limit;
         }
         else
         {
-            limitY = limit;
+            limitX = limit;
         }
     }
 
@@ -89,11 +91,14 @@ public class SmallCircle : MonoBehaviour
         {
             if (nextPos.y > transform.position.y)
             {
+
                 nextPos = new Vector2(transform.position.x, transform.position.y - (limitY*2));
+                transform.localScale = new Vector3(-1, 1, 1);
             }
             else
             {
                 nextPos = new Vector2(transform.position.x, transform.position.y + (limitY*2));
+                transform.localScale = new Vector3(1, 1, 1);
             }
         }
         else
@@ -101,22 +106,46 @@ public class SmallCircle : MonoBehaviour
             if (nextPos.x > transform.position.x)
             {
                 nextPos = new Vector2(transform.position.x - (limitX*2) , transform.position.y);
+                transform.localScale = new Vector3(-1, 1, 1);
             }
             else
             {
                 nextPos = new Vector2(transform.position.x + (limitX*2), transform.position.y);
+                transform.localScale = new Vector3(1,1,1);
             }
         }
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("WallTileMap") || collision.gameObject.CompareTag("ExtrasTileMap"))
-        {
-            changePos();
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    ////transform.position = Vector2.MoveTowards(transform.position, nextPos, -3f * Time.deltaTime);
+    //    if (collision.gameObject.CompareTag("WallTileMap") || collision.gameObject.CompareTag("ExtrasTileMap"))
+    //    {
+    //        if (vertical)
+    //        {
+    //            //if (nextPos.y > transform.position.y)
+    //            //{
+    //            //    nextPos = new Vector2(transform.position.x, transform.position.y - (limitY * 2));
+    //            //}
+    //            //else
+    //            //{
+    //            //    nextPos = new Vector2(transform.position.x, transform.position.y + (limitY * 2));
+    //            //}
+    //        }
+    //        else
+    //        {
+    //            //if (nextPos.x > 0 || nextPos.x >= transform.position.x - 2)
+    //            //{
+    //            //    nextPos = new Vector2(transform.position.x - (limitX * 2), transform.position.y);
+    //            //}
+    //            //else
+    //            //{
+    //            //    nextPos = new Vector2(transform.position.x + (limitX * 2), transform.position.y);
+    //            //}
+    //        }
+    //    }
+    //}
 
     private void OnCollisionStay2D(Collision2D collision)
     {

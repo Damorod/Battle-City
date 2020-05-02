@@ -11,6 +11,8 @@ public class EnemyCircle : MonoBehaviour
 
     public float speed;
 
+    public Animator anim;
+
     public HealthSystem healthSystem;
     public HealthBarEnemy health;
 
@@ -33,6 +35,7 @@ public class EnemyCircle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (healthSystem.GetCurrentHealth() < 0)
         {
             shake.shaker();
@@ -43,7 +46,17 @@ public class EnemyCircle : MonoBehaviour
         }
         else
         {
-            transform.up = player.transform.position - transform.position;
+            if (player.transform.position.x > transform.position.x)
+            {
+                //face right
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (player.transform.position.x < transform.position.x)
+            {
+                //face left
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            barril.transform.up = player.transform.position - barril.transform.position;
             RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up, 2);
             if (hitInfo.collider != null && (hitInfo.collider.CompareTag("ExtrasTileMap") || hitInfo.collider.CompareTag("EnemyCircle")))
             {
@@ -55,6 +68,7 @@ public class EnemyCircle : MonoBehaviour
             }
             else
             {
+                anim.SetBool("isRunning", true);
                 transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
             }
         }

@@ -72,8 +72,8 @@ public class SpawnMapStage2 : MonoBehaviour
         if (maxEnemys < 1)
         {
             Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
-            Collider[] hits = Physics.OverlapSphere(new Vector3(positionSpawn.x, positionSpawn.y, 0), 3f);
-            if (hits.Length == 0)
+            Collider2D hits = Physics2D.OverlapCircle(new Vector3(positionSpawn.x, positionSpawn.y, 0), 0.1f);
+            if (hits == null)
             {
                 GameObject spawned = Instantiate(enemyC, positionSpawn, Quaternion.identity) as GameObject;
                 spawned.gameObject.GetComponent<EnemyCircle>().player = GameObject.FindGameObjectWithTag("Player");

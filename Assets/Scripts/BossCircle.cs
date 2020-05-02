@@ -16,6 +16,10 @@ public class BossCircle : MonoBehaviour
     public Vector3 target;
     public float speed;
 
+    public Collider2D test;
+
+    public int maxCircles;
+
     private CamShake shake;
     // Start is called before the first frame update
     void Start()
@@ -23,7 +27,6 @@ public class BossCircle : MonoBehaviour
         speed = 3f;
         shake = GameObject.FindGameObjectWithTag("CameraShake").GetComponent<CamShake>();
         healthSystem.SetMaxHealth(150);
-        SpawnSmallCircle();
         healthBar.SetMaxHealth(healthSystem.GetMaxHealth());
 
     }
@@ -31,12 +34,14 @@ public class BossCircle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        StartCoroutine(SpawnCircle());
         if(healthSystem.GetCurrentHealth() == 0)
         {
             shake.shaker();
             Instantiate(deathEfect, transform.position, Quaternion.identity);
             Instantiate(deathParticules, transform.position, Quaternion.identity);
             Destroy(gameObject);
+            GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>().LoadNextScene();
         }
         else if (healthSystem.GetCurrentHealth() < 75)
         {
@@ -51,6 +56,34 @@ public class BossCircle : MonoBehaviour
         {
             coll.gameObject.GetComponent<Player>().TakeDamage(15);
         }
+    }
+
+    public void SpawnSaw()
+    {
+        float limit;
+        bool vertical;
+
+        Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
+
+        limit = Random.Range(1f, 4f);
+
+        int a = Random.Range(0, 2) * 2 - 1;
+        if (a == -1)
+        {
+            vertical = true;
+        }
+        else
+        {
+            vertical = false;
+        }
+        smallCircle.GetComponent<SmallCircle>().SetPos(limit);
+        smallCircle.GetComponent<SmallCircle>().vertical = vertical;
+        test = Physics2D.OverlapCircle(positionSpawn, limit);     
+        if (!test)
+        {
+            Instantiate(smallCircle, positionSpawn, Quaternion.identity);
+        }
+
     }
 
     public void TakeDamage(int damage)
@@ -81,7 +114,16 @@ public class BossCircle : MonoBehaviour
 
     public void SpawnSmallCircle()
     {
-        smallCircle.GetComponent<SmallCircle>().SetPos(2);
-        Instantiate(smallCircle, transform.position, Quaternion.identity);
+
+    }
+
+    IEnumerator SpawnCircle()
+    {
+        if (maxCircles < 5)
+        {
+            SpawnSaw();
+            maxCircles++;
+        }
+        yield return new WaitForSeconds(1f);
     }
 }

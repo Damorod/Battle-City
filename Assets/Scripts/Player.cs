@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     public int maxShield = 70;
     public int currentShield;
 
+    public Animator anim;
+
     public Inventory inv;
     public HealthBar healthBar;
     void Start()
@@ -59,14 +61,24 @@ public class Player : MonoBehaviour
                 projectile.GetComponent<Projectile>().changeColor(2);
             }
         }
+       
         direccion = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         angulo = Mathf.Atan2(direccion.y, direccion.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angulo - 90f);
+        barril.rotation = Quaternion.Euler(0f, 0f, angulo - 90f);
         move();
-        if(currentShield > 0)
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!attacking && !shieldOn)
+            {
+                StartCoroutine(attack());
+            }
+        }
+        if (currentShield > 0)
         {
             if (Input.GetKey(KeyCode.Space))
             {
+                angulo = Mathf.Atan2(direccion.y, direccion.x) * Mathf.Rad2Deg;
+                shield.transform.rotation = Quaternion.Euler(0f, 0f, angulo - 90f);
                 shield.SetActive(true);
                 shieldOn = true;
             }
@@ -81,13 +93,7 @@ public class Player : MonoBehaviour
         {
             shield.SetActive(false);
         }
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!attacking && !shieldOn)
-            {
-                StartCoroutine(attack());
-            }
-        }
+        
 
     }
 
@@ -105,6 +111,23 @@ public class Player : MonoBehaviour
 
     void move()
     {
+        if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            anim.SetBool("isRunning", true);
+            if (Input.GetAxisRaw("Horizontal") == 1)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (Input.GetAxisRaw("Horizontal") == -1)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+        }
+        else
+        {
+            anim.SetBool("isRunning", false);
+        }
+       
         float x = Input.GetAxisRaw("Horizontal") * 5;
         float y = Input.GetAxisRaw("Vertical") * 5;
         r.velocity = new Vector2(x, y);

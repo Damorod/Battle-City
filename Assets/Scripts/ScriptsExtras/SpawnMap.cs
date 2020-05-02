@@ -47,13 +47,13 @@ public class SpawnMap : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameObject.FindGameObjectWithTag("EnemyTriangule") == null && !bossSpawned)
-        {
+        //if (GameObject.FindGameObjectWithTag("EnemyTriangule") == null && !bossSpawned)
+        //{
 
-            bossTriangule.SetActive(true);
-            bossLife.SetActive(true);
-            bossSpawned = true;
-        }
+        //    bossTriangule.SetActive(true);
+        //    bossLife.SetActive(true);
+        //    bossSpawned = true;
+        //}
         if (!fireSpawned)
         {
             if ((int)Time.time == randomFire)
@@ -103,8 +103,8 @@ public class SpawnMap : MonoBehaviour
         if (maxEnemys < 10)
         {
             Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
-            Collider[] hits = Physics.OverlapSphere(new Vector3(positionSpawn.x, positionSpawn.y, 0), 3f);
-            if (hits.Length == 0)
+            Collider2D hits = Physics2D.OverlapCircle(new Vector3(positionSpawn.x, positionSpawn.y, 0), 0.1f);
+            if (hits == null)
             {
                 GameObject spawned = Instantiate(enemyT, positionSpawn, Quaternion.identity) as GameObject;
                 spawned.gameObject.GetComponent<EnemyTriangule>().player = GameObject.FindGameObjectWithTag("Player");
@@ -112,6 +112,10 @@ public class SpawnMap : MonoBehaviour
                 test.Add(spawned.gameObject.GetComponent<EnemyTriangule>().numberCode);
                 maxEnemys++;
                 i++;
+            }
+            else
+            {
+                Debug.Log("Funda");
             }
         }
     }

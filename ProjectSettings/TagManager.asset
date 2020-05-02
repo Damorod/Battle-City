@@ -19,6 +19,7 @@ TagManager:
   - BossTriangule
   - BossCube
   - SmallEnemyCircle
+  - LevelLoader
   layers:
   - Default
   - TransparentFX

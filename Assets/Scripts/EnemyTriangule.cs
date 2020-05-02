@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyTriangule : MonoBehaviour
 {
-    public LineRenderer lr;
     public GameObject player;
     public Transform barril;
 
+    public Animator anim;
     public GameObject bloodStain;
     private CamShake shake;
 
@@ -37,7 +37,17 @@ public class EnemyTriangule : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (player.transform.position.x > transform.position.x)
+        {
+            //face right
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (player.transform.position.x < transform.position.x)
+        {
+            //face left
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        //GetComponent<SpriteRenderer>().flipX = player.transform.position.x < transform.position.x;
         if (healthSystem.GetCurrentHealth() < 0)
         {
             shake.shaker();
@@ -48,52 +58,83 @@ public class EnemyTriangule : MonoBehaviour
         }
         else
         {
-            transform.up = player.transform.position - transform.position;
+            barril.transform.up = player.transform.position - barril.transform.position;
             RaycastHit2D hit = Physics2D.Raycast(barril.position, barril.up, 5);
-
+            anim.SetBool("isRunning", false);
+            anim.ResetTrigger("Attacking");
             if (hit.collider != null && !hit.collider.CompareTag("ExtrasTileMap"))
             {
-                if (Vector3.Distance(transform.position, player.transform.position) >= 2 && !hit.collider.CompareTag("EnemyTriangule"))
+                if (Vector3.Distance(transform.position, player.transform.position) > 1.3f && !hit.collider.CompareTag("EnemyTriangule"))
                 {
+                    anim.SetBool("isRunning", true);
                     move(player.transform.position, speed);
-                }
-                else if(Vector3.Distance(transform.position, player.transform.position) < 1.9f && !hit.collider.CompareTag("EnemyTriangule"))
+                }else if(Vector3.Distance(transform.position, player.transform.position) <= 1.3f)
                 {
-                    move(player.transform.position, -speed);
+                    anim.SetBool("isRunning", false);
+                    anim.SetTrigger("Attacking");
                 }
-                if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("Shield")))
-                {
-                    if (!lr.enabled)
-                        lr.enabled = true;
-                    if(Time.time > m_shootRateTimeStamp)
-                    {
-                        lr.SetPosition(0, new Vector3(barril.position.x, barril.position.y, -1));
-                        lr.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -1));
-                        if (hit.collider.CompareTag("Player"))
-                        {
-                            hit.collider.GetComponent<Player>().TakeDamage(1);
-                        }
-                        else
-                        {
-                            hit.collider.GetComponent<Player>().TakeDamageShield(1);
-                        }
-                        StartCoroutine(attack(hit));
-                    }
-                    else
-                    {
-                        lr.enabled = false;
-                    }
-                }
-                else
-                {
-                    lr.enabled = false;
-                }
+                //else if (Vector3.Distance(transform.position, player.transform.position) < 1.9f && !hit.collider.CompareTag("EnemyTriangule"))
+                //{
+                //    anim.SetBool("isRunning", true);
+                //    anim.SetBool("isAttacking", true);
+                //    move(player.transform.position, -speed);
+                //}
+
+                //if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("Shield")))
+                //{
+                //    if (!lr.enabled)
+                //        lr.enabled = true;
+                //    if (Time.time > m_shootRateTimeStamp)
+                //    {
+                //        lr.SetPosition(0, new Vector3(barril.position.x, barril.position.y, -1));
+                //        lr.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -1));
+                //        if (hit.collider.CompareTag("Player"))
+                //        {
+                //            hit.collider.GetComponent<Player>().TakeDamage(1);
+                //        }
+                //        else
+                //        {
+                //            hit.collider.GetComponent<Player>().TakeDamageShield(1);
+                //        }
+                //        StartCoroutine(attack(hit));
+                //    }
+                //    else
+                //    {
+                //        lr.enabled = false;
+                //    }
+                //}
+            //    else
+            //    {
+            //        lr.enabled = false;
+            //    }
             }
-            else
-            {
-                lr.enabled = false;
-            }
+            //else
+            //{
+            //    lr.enabled = false;
+            //}
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(barril.transform.position, 0.9f);
+    }
+
+    public void attacking()
+    {
+        //RaycastHit2D hit = Physics2D.Raycast(barril.position, barril.up, 5);
+        //if (hit.collider != null && (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Shield")))
+        //{
+
+        //NEED TO IGNORE ENEMY COLLIDER!!!!
+
+            Collider2D hits = Physics2D.OverlapCircle(barril.transform.position, 0.9f);
+            if (hits.CompareTag("Player"))
+            {
+                hits.GetComponent<Player>().TakeDamage(10);
+            }
+        //}
     }
 
     public void slow(float sw)

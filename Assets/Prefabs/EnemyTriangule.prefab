@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.022692025, y: -0.35199976}
+  m_AnchoredPosition: {x: -0.022692025, y: -0.957}
   m_SizeDelta: {x: 7.048, y: 2.009}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6404786009682301158
@@ -123,7 +123,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6404786009755490357}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.001000002, y: 0.527, z: -8.619141}
+  m_LocalPosition: {x: 0.368, y: -0.506, z: -8.619141}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6404786010741038341}
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 6404786010741038340}
   - component: {fileID: -4631895818788938023}
   - component: {fileID: 6404786010741038338}
-  - component: {fileID: 6404786010741038339}
+  - component: {fileID: 4456991312181815136}
   m_Layer: 0
   m_Name: EnemyTriangule
   m_TagString: EnemyTriangule
@@ -158,7 +158,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6404786010741038343}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.04, y: -0.456, z: 0}
+  m_LocalPosition: {x: 0.04, y: -0.265, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6404786009682301145}
@@ -205,7 +205,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ac5408e3290bcfd48b6c4577a89725d2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea1002a22aed2ba40b36bf2d6683e662, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -231,6 +231,7 @@ MonoBehaviour:
   lr: {fileID: 6404786010980328679}
   player: {fileID: 0}
   barril: {fileID: 6404786009755490356}
+  anim: {fileID: 0}
   bloodStain: {fileID: 7580695427182302955, guid: 69acd0d077619a349abf1ee8a54c05ed,
     type: 3}
   shootRate: 0
@@ -239,6 +240,7 @@ MonoBehaviour:
     type: 3}
   deathParticules: {fileID: 6693834121063239736, guid: b1605256d23fcc049890c41f1a947b50,
     type: 3}
+  numberCode: 0
   healthSystem: {fileID: -4631895818788938023}
   health: {fileID: 6404786011263603289}
 --- !u!114 &-4631895818788938023
@@ -276,8 +278,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!60 &6404786010741038339
-PolygonCollider2D:
+--- !u!61 &4456991312181815136
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -289,21 +291,19 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.049758747, y: -0.37127686}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 1.75}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 0.5}
-      - {x: -0.4330127, y: -0.25000003}
-      - {x: 0.43301272, y: -0.24999996}
+  serializedVersion: 2
+  m_Size: {x: 0.7933099, y: 1.0074463}
+  m_EdgeRadius: 0
 --- !u!1 &6404786010795492705
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,6 +521,7 @@ MonoBehaviour:
   lr: {fileID: 6404786010980328679}
   player: {fileID: 0}
   barril: {fileID: 6404786010980328664}
+  anim: {fileID: 0}
   bloodStain: {fileID: 7580695427182302955, guid: 69acd0d077619a349abf1ee8a54c05ed,
     type: 3}
   shootRate: 0
@@ -529,6 +530,7 @@ MonoBehaviour:
     type: 3}
   deathParticules: {fileID: 6693834121063239736, guid: b1605256d23fcc049890c41f1a947b50,
     type: 3}
+  numberCode: 0
   healthSystem: {fileID: 0}
   health: {fileID: 6404786011263603289}
 --- !u!212 &6404786010980328677

@@ -37,7 +37,9 @@ public class BossTraingule : MonoBehaviour
             Instantiate(deathEfect, transform.position, Quaternion.identity);
             Instantiate(deathParticules, transform.position, Quaternion.identity);
             Destroy(gameObject);
-        }else if(healthSystem.GetCurrentHealth() < 75)
+            GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>().LoadNextScene();
+        }
+        else if(healthSystem.GetCurrentHealth() < 75)
         {
             GetComponent<Animator>().SetBool("AttackRage", true);
         }
