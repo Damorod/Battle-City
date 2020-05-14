@@ -27,7 +27,7 @@ public class MovementEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 3f;
+        speed = 2f;
         shake = GameObject.FindGameObjectWithTag("CameraShake").GetComponent<CamShake>();
         healthSystem.SetMaxHealth(50);
         inicial = transform.position;

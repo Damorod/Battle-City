@@ -17,14 +17,21 @@ public class BossMovementTirangule : StateMachineBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         transform = animator.GetComponent<Transform>();
         r = animator.GetComponent<Rigidbody2D>();
-        barrilTop = GameObject.Find("BarrilTop").GetComponent<Transform>();
-        lr = GameObject.Find("Line").GetComponent<LineRenderer>();
+        barrilTop = GameObject.Find("FirePoint").GetComponent<Transform>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        transform.up = player.transform.position - transform.position;
+        barrilTop.transform.up = player.transform.position - barrilTop.transform.position;
+        if (player.transform.position.x > transform.position.x)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (player.transform.position.x < transform.position.x)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
         RaycastHit2D hitInfo = Physics2D.Raycast(barrilTop.position, barrilTop.up);
         if (!hitInfo.collider.CompareTag("ExtrasTileMap"))
         {
@@ -36,15 +43,10 @@ public class BossMovementTirangule : StateMachineBehaviour
             {
                 transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), -3f * Time.deltaTime);
             }
-            if ((hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield")) && !animator.GetBool("AttackRage"))
-            {
-                animator.SetTrigger("Attack");
-                lr.enabled = false;
-            }
-            else
-            {
-                lr.enabled = false;
-            }
+            //if ((hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield")) && !animator.GetBool("AttackRage"))
+            //{
+            //    animator.SetTrigger("Attack");
+            //}
         }
     }
 

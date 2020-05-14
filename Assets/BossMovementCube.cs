@@ -19,7 +19,7 @@ public class BossMovementCube : StateMachineBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         transform = animator.GetComponent<Transform>();
         r = animator.GetComponent<Rigidbody2D>();
-        barrilTop = GameObject.Find("Barril").GetComponent<Transform>();
+        barrilTop = GameObject.Find("FirePoint").GetComponent<Transform>();
         target = player.transform.position;
         //lr = GameObject.Find("Line").GetComponent<LineRenderer>();
     }

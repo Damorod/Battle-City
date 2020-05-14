@@ -11,8 +11,8 @@ public class ProjectileEnemyExplotion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //target = GameObject.FindGameObjectWithTag("Player").transform;
-        target = player.transform.position;
+        target = GameObject.FindGameObjectWithTag("Player").transform.position;
+       // target = player.transform.position;
         GetComponent<ParticleSystem>().Stop();
     }
 

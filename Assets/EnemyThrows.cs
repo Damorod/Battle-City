@@ -19,8 +19,8 @@ public class EnemyThrows : MonoBehaviour
     void Update()
     {
         RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up, 7);
-        if ((!attacking && hitInfo && hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield")) )
-        {
+        if (hitInfo.collider != null && (!attacking &&  hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield")) )
+        {   
             StartCoroutine(Shoot());
         }  
 

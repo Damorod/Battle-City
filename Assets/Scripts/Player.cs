@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     private float angulo;
     private Rigidbody2D r;
 
+    public GameObject proyectileAnim;
+
     public GameObject shield;
     public List<string> typeWeapon;
 
@@ -103,6 +105,16 @@ public class Player : MonoBehaviour
         bar.Ready(0);
         GameObject pro = Instantiate(projectile, barril.position, barril.rotation);
         pro.GetComponent<Rigidbody2D>().velocity = barril.up * 10f;
+        if(transform.localScale.x == 1)
+        {
+            proyectileAnim.transform.localScale = new Vector3(1, 1, 1);
+            Instantiate(proyectileAnim, barril.transform.position, Quaternion.identity);
+        }
+        else
+        {
+            proyectileAnim.transform.localScale = new Vector3(-1, 1, 1);
+            Instantiate(proyectileAnim, barril.transform.position, Quaternion.identity);
+        }
         yield return new WaitForSeconds(0.5f);
         attacking = false;
         bar.Ready(1);

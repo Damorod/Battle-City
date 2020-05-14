@@ -129,8 +129,8 @@ public class EnemyTriangule : MonoBehaviour
 
         //NEED TO IGNORE ENEMY COLLIDER!!!!
 
-            Collider2D hits = Physics2D.OverlapCircle(barril.transform.position, 0.9f);
-            if (hits.CompareTag("Player"))
+            Collider2D hits = Physics2D.OverlapCircle(barril.transform.position, 0.9f, 1<<10);
+            if (hits != null && hits.CompareTag("Player"))
             {
                 hits.GetComponent<Player>().TakeDamage(10);
             }

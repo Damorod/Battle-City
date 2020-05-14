@@ -59,6 +59,15 @@ TextureImporter:
   - first:
       213: -6980208274519352640
     second: industrial.v1_10
+  - first:
+      213: 4393626550797386381
+    second: industrial.v1_3
+  - first:
+      213: 8858105896105820570
+    second: industrial.v1_4
+  - first:
+      213: -6316974992067345817
+    second: industrial.v1_5
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -381,6 +390,90 @@ TextureImporter:
       bones: []
       spriteID: ea64b65583934db4094a497e445940cf
       internalID: -6980208274519352640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: industrial.v1_2
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 181
+        width: 18
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86c8876e92568e844949d668a844aa6b
+      internalID: 2482825823476575824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: industrial.v1_3
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 171
+        width: 19
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8056592aec62f364cab1c73d04806a09
+      internalID: 4393626550797386381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: industrial.v1_4
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 161
+        width: 20
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bc4a4f6f8437e64ba2798e8367b5f6e
+      internalID: 8858105896105820570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: industrial.v1_5
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 151
+        width: 21
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddf909433fa8ebc4aba9dcfaf19ebb74
+      internalID: -6316974992067345817
       vertices: []
       indices: 
       edges: []
