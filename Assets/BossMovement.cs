@@ -49,6 +49,9 @@ public class BossMovement : MonoBehaviour
         }
         else
         {
+
+            barril.transform.up = player.transform.position - barril.transform.position;
+            RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up, 7);
             if (player.transform.position.x > transform.position.x)
             {
                 transform.localScale = new Vector3(1, 1, 1);
@@ -57,21 +60,21 @@ public class BossMovement : MonoBehaviour
             {
                 transform.localScale = new Vector3(-1, 1, 1);
             }
-            barril.transform.up = player.transform.position - barril.transform.position;
-            RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up, 7);
             anim.ResetTrigger("Attacking");
+            anim.SetBool("isRunning", false);
             if (hitInfo.collider != null && !hitInfo.collider.CompareTag("ExtrasTileMap"))
             {
+               
                 if (Vector3.Distance(transform.position, player.transform.position) >= 3 && !hitInfo.collider.CompareTag("Enemy"))
                 {
                     anim.SetBool("isRunning", true);
                     move(player.transform.position, speed);
                 }
-                else if (Vector3.Distance(transform.position, player.transform.position) < 2.8f && !hitInfo.collider.CompareTag("Enemy"))
-                {
-                    anim.SetBool("isRunning", true);
-                    move(player.transform.position, -speed);
-                }
+                //else if (Vector3.Distance(transform.position, player.transform.position) < 2.8f && !hitInfo.collider.CompareTag("Enemy"))
+                //{
+                //    anim.SetBool("isRunning", true);
+                //    move(player.transform.position, -speed);
+                //}
                 else
                 {
                     anim.SetTrigger("Attacking");
@@ -83,6 +86,7 @@ public class BossMovement : MonoBehaviour
     }
     void move(Vector2 target, float speedy)
     {
+
         transform.position = Vector2.MoveTowards(transform.position, new Vector2(target.x, target.y), speedy * Time.deltaTime);
     }
 

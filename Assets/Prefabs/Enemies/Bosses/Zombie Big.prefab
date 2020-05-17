@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5380857055362992786}
   - component: {fileID: 3428527880657039606}
   m_Layer: 0
-  m_Name: Zombie Big 1
+  m_Name: Zombie Big
   m_TagString: EnemyTriangule
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,8 +33,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3428527881651205574}
-  - {fileID: 8608293138457897182}
   - {fileID: 8608293139285379318}
+  - {fileID: 8608293138457897182}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -222,11 +222,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8608293138457897183}
   m_LocalRotation: {x: 0.0019323382, y: 0.008511176, z: 0.2213926, w: 0.97514576}
-  m_LocalPosition: {x: -0.12, y: -0.95, z: 0}
+  m_LocalPosition: {x: -0.119999886, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3428527880657039607}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 1, z: 25.583002}
 --- !u!212 &8608293138457896993
 SpriteRenderer:
@@ -306,7 +306,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3428527880657039607}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 44.185}
 --- !u!212 &8608293139285379321
 SpriteRenderer:
