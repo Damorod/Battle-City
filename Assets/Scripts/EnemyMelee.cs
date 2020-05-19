@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTriangule : MonoBehaviour
+public class EnemyMelee : MonoBehaviour
 {
     public GameObject player;
     public Transform barril;
@@ -73,45 +73,8 @@ public class EnemyTriangule : MonoBehaviour
                     anim.SetBool("isRunning", false);
                     anim.SetTrigger("Attacking");
                 }
-                //else if (Vector3.Distance(transform.position, player.transform.position) < 1.9f && !hit.collider.CompareTag("EnemyTriangule"))
-                //{
-                //    anim.SetBool("isRunning", true);
-                //    anim.SetBool("isAttacking", true);
-                //    move(player.transform.position, -speed);
-                //}
-
-                //if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("Shield")))
-                //{
-                //    if (!lr.enabled)
-                //        lr.enabled = true;
-                //    if (Time.time > m_shootRateTimeStamp)
-                //    {
-                //        lr.SetPosition(0, new Vector3(barril.position.x, barril.position.y, -1));
-                //        lr.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -1));
-                //        if (hit.collider.CompareTag("Player"))
-                //        {
-                //            hit.collider.GetComponent<Player>().TakeDamage(1);
-                //        }
-                //        else
-                //        {
-                //            hit.collider.GetComponent<Player>().TakeDamageShield(1);
-                //        }
-                //        StartCoroutine(attack(hit));
-                //    }
-                //    else
-                //    {
-                //        lr.enabled = false;
-                //    }
-                //}
-            //    else
-            //    {
-            //        lr.enabled = false;
-            //    }
+               
             }
-            //else
-            //{
-            //    lr.enabled = false;
-            //}
         }
     }
 
@@ -123,18 +86,15 @@ public class EnemyTriangule : MonoBehaviour
 
     public void attacking()
     {
-        //RaycastHit2D hit = Physics2D.Raycast(barril.position, barril.up, 5);
-        //if (hit.collider != null && (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Shield")))
-        //{
-
-        //NEED TO IGNORE ENEMY COLLIDER!!!!
-
-            Collider2D hits = Physics2D.OverlapCircle(barril.transform.position, 0.9f, 1<<10);
-            if (hits != null && hits.CompareTag("Player"))
-            {
-                hits.GetComponent<Player>().TakeDamage(10);
-            }
-        //}
+        Collider2D hits = Physics2D.OverlapCircle(barril.transform.position, 0.9f, 1 << 10);
+        if (hits != null && hits.CompareTag("Player"))
+        {
+           hits.GetComponent<Player>().TakeDamage(10);
+        }
+    }
+    public void UpdateHealthBar()
+    {
+        health.SetHealth(healthSystem.GetCurrentHealth());
     }
 
     public void slow(float sw)

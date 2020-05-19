@@ -29,7 +29,8 @@ public class BossMovement : MonoBehaviour
     {
         speed = 2f;
         shake = GameObject.FindGameObjectWithTag("CameraShake").GetComponent<CamShake>();
-        healthSystem.SetMaxHealth(50);
+        healthSystem.SetMaxHealth(80);
+        healthSystem.SetBoss(true);
         inicial = transform.position;
         health.SetMaxHealth(healthSystem.GetMaxHealth());
     }
@@ -39,7 +40,7 @@ public class BossMovement : MonoBehaviour
     {
         target = inicial;
 
-        if (healthSystem.GetCurrentHealth() < 0)
+        if (healthSystem.GetCurrentHealth() <= 0)
         {
             shake.shaker();
             Instantiate(deathEfect, transform.position, Quaternion.identity);
@@ -47,9 +48,13 @@ public class BossMovement : MonoBehaviour
             Instantiate(bloodStain, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
+        else if (healthSystem.GetCurrentHealth() == 45)
+        {
+            anim.SetBool("isEnraged", true);
+            speed = 3f;
+        }
         else
         {
-
             barril.transform.up = player.transform.position - barril.transform.position;
             RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up, 7);
             if (player.transform.position.x > transform.position.x)
@@ -65,6 +70,7 @@ public class BossMovement : MonoBehaviour
             if (hitInfo.collider != null && !hitInfo.collider.CompareTag("ExtrasTileMap"))
             {
                
+
                 if (Vector3.Distance(transform.position, player.transform.position) >= 3 && !hitInfo.collider.CompareTag("Enemy"))
                 {
                     anim.SetBool("isRunning", true);
@@ -100,6 +106,11 @@ public class BossMovement : MonoBehaviour
     public void slow(float sw)
     {
         StartCoroutine(slows(sw));
+    }
+
+    public void UpdateHealthBar()
+    {
+        health.SetHealth(healthSystem.GetCurrentHealth());
     }
 
     IEnumerator slows(float s)

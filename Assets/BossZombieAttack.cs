@@ -22,15 +22,7 @@ public class BossZombieAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(!flying)
-        //{
-        //    //hammer.transform.RotateAround(hammer.transform.position, Vector3.forward, 2f);
-        //    hammer.transform.position = Vector2.MoveTowards(hammer.transform.position, target, 3f * Time.deltaTime);
-        //    if (hammer.transform.position == target)
-        //    {
-        //        hammer.transform.position = Vector2.MoveTowards(hammer.transform.position, origin, 3f + Time.deltaTime);
-        //    }
-        //}
+
         
     }
 

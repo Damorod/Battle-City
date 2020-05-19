@@ -7,27 +7,25 @@ public class LevelLoader : MonoBehaviour
 {
     // Start is called before the first frame update
     public Animator trans;
-    bool stage0;
-    bool stage1;
-    bool stage2;
+    public GameObject player;
+    public bool bossDead;
+
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     // Update is called once per frame
     void Update()
     {
-        //if (GameObject.FindGameObjectWithTag("EnemyTriangule") == null && GameObject.FindGameObjectsWithTag("BossTriangule") == null)
-        //{
-        //    StartCoroutine(LoadScene(1));
-        //    stage0 = true;
-        //}
-        //if (GameObject.FindGameObjectWithTag("EnemyCircle") == null && GameObject.FindGameObjectsWithTag("BossCube") == null && stage0)
-        //{
-        //    StartCoroutine(LoadScene(2));
-        //    stage1 = true;
-        //}
-
-        //if (Input.GetKey(KeyCode.Space))
-        //{
-        //    LoadNextScene();
-        //}
+        if(player.GetComponent<HealthSystem>().GetCurrentHealth() <= 0)
+        {
+            Debug.Log("RIP");
+        }else if (bossDead)
+        {
+            Debug.Log("LPM");
+            //LoadNextScene();
+        }
     }
 
     public void LoadNextScene()

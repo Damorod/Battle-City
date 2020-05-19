@@ -77,8 +77,8 @@ public class SpawnMapStage3 : MonoBehaviour
             if (hits == null)
             {
                 GameObject spawned = Instantiate(enemy, positionSpawn, Quaternion.identity) as GameObject;
-                spawned.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
-                spawned.gameObject.GetComponent<Enemy>().setNumber(i);
+                spawned.gameObject.GetComponent<EnemyRange>().player = GameObject.FindGameObjectWithTag("Player");
+                spawned.gameObject.GetComponent<EnemyRange>().setNumber(i);
                 maxEnemys++;
                 i++;
             }

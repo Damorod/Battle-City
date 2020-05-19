@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyRange : MonoBehaviour
 {
     public GameObject player;
     public GameObject projectile;
@@ -54,17 +54,7 @@ public class Enemy : MonoBehaviour
             Instantiate(deathParticules, transform.position, Quaternion.identity);
             Instantiate(bloodStain, transform.position, Quaternion.identity);
             Destroy(gameObject);
-            //if (gameObject.CompareTag("Enemy"))
-            //{
-            //    GameObject test = Instantiate(enemySmall, new Vector2(transform.position.x + 0.5f, transform.position.y + .5f), Quaternion.identity);
-            //    test.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
-            //    //GameObject test1 = Instantiate(enemySmall, new Vector2(transform.position.x + 0.5f, transform.position.y - .5f), Quaternion.identity);
-            //    //test1.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
-            //    //GameObject test2 = Instantiate(enemySmall, new Vector2(transform.position.x - 0.5f, transform.position.y + .5f), Quaternion.identity);
-            //    //test2.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
-            //    GameObject test3 = Instantiate(enemySmall, new Vector2(transform.position.x - 0.5f, transform.position.y - .5f), Quaternion.identity);
-            //    test3.gameObject.GetComponent<Enemy>().player = GameObject.FindGameObjectWithTag("Player");
-            //}
+
         }          
         else
         {
@@ -100,7 +90,6 @@ public class Enemy : MonoBehaviour
                 if ((hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield")))
                 {
                     anim.SetTrigger("isAttacking");
-                    //StartCoroutine(attack());
                 }
             }
         }
@@ -136,10 +125,8 @@ public class Enemy : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
-    public void TakeDamage(int damage)
+    public void UpdateHealthBar()
     {
-        healthSystem.TakeDamage(damage);
-        StartCoroutine(flash());
         healthBar.SetHealth(healthSystem.GetCurrentHealth());
     }
 

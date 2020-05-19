@@ -31,49 +31,7 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.CompareTag("BossTriangule"))
-        {
-            switch (color)
-            {
-                case 0:
-                    coll.gameObject.GetComponent<BossTraingule>().TakeDamage(5);
-                    Instantiate(explosion, transform.position, Quaternion.identity);
-                    break;
-                case 1:
-                    coll.gameObject.GetComponent<BossTraingule>().TakeDamage(6);
-                    //coll.gameObject.GetComponent<Enemy>().FireDamage(1);
-                    Instantiate(fireExplosion, transform.position, Quaternion.identity);
-                    break;
-                case 2:
-                    coll.gameObject.GetComponent<BossTraingule>().TakeDamage(4);
-                    //coll.gameObject.GetComponent<Enemy>().slow(0.5f);
-                    Instantiate(iceExplosion, transform.position, Quaternion.identity);
-                    break;
-            }
-            Destroy(gameObject);
-        }
-        if (coll.gameObject.CompareTag("BossCube"))
-        {
-            switch (color)
-            {
-                case 0:
-                    coll.gameObject.GetComponent<BossCircle>().TakeDamage(5);
-                    Instantiate(explosion, transform.position, Quaternion.identity);
-                    break;
-                case 1:
-                    coll.gameObject.GetComponent<BossCircle>().TakeDamage(6);
-                    //coll.gameObject.GetComponent<Enemy>().FireDamage(1);
-                    Instantiate(fireExplosion, transform.position, Quaternion.identity);
-                    break;
-                case 2:
-                    coll.gameObject.GetComponent<BossCircle>().TakeDamage(4);
-                    //coll.gameObject.GetComponent<Enemy>().slow(0.5f);
-                    Instantiate(iceExplosion, transform.position, Quaternion.identity);
-                    break;
-            }
-            Destroy(gameObject);
-        }
-        if (coll.gameObject.CompareTag("ExtrasTileMap") || coll.gameObject.CompareTag("WallTileMap") )
+        if (coll.gameObject.CompareTag("ExtrasTileMap") || coll.gameObject.CompareTag("WallTileMap"))
         {
             switch (color)
             {
@@ -89,88 +47,184 @@ public class Projectile : MonoBehaviour
             }
             Destroy(gameObject);
         }
-        if (coll.gameObject.CompareTag("Enemy") || coll.gameObject.CompareTag("EnemySmall"))
-        {        
-            switch (color)
-            {
-                case 0:
-                    coll.gameObject.GetComponent<Enemy>().TakeDamage(5);
-                    Instantiate(explosion, transform.position, Quaternion.identity);
-                    break;
-                case 1:
-                    coll.gameObject.GetComponent<Enemy>().TakeDamage(6);
-                    coll.gameObject.GetComponent<Enemy>().FireDamage(1);
-                    Instantiate(fireExplosion, transform.position, Quaternion.identity);
-                    break;
-                case 2:
-                    coll.gameObject.GetComponent<Enemy>().TakeDamage(4);
-                    coll.gameObject.GetComponent<Enemy>().slow(0.5f);
-                    Instantiate(iceExplosion, transform.position, Quaternion.identity);
-                    break;
-            }
-            Destroy(gameObject);
-        }
-        if (coll.gameObject.CompareTag("EnemyCircle"))
+        else if (coll.gameObject.GetComponent<HealthSystem>().boss == false && !coll.gameObject.CompareTag("Player"))
         {
             switch (color)
             {
                 case 0:
-                    coll.gameObject.GetComponent<EnemyCircle>().TakeDamage(5);
+                    coll.gameObject.GetComponent<HealthSystem>().TakeDamageA(5);
                     Instantiate(explosion, transform.position, Quaternion.identity);
                     break;
                 case 1:
-                    coll.gameObject.GetComponent<EnemyCircle>().TakeDamage(6);
+                    coll.gameObject.GetComponent<HealthSystem>().TakeDamageA(6);
+                    if (coll.gameObject.CompareTag("EnemyMelee") || coll.gameObject.CompareTag("EnemyRange"))
+                    {
+                        coll.gameObject.GetComponent<EnemyRange>().FireDamage(1);
+                    }
                     Instantiate(fireExplosion, transform.position, Quaternion.identity);
                     break;
                 case 2:
-                    coll.gameObject.GetComponent<EnemyCircle>().TakeDamage(4);
-                    coll.gameObject.GetComponent<EnemyCircle>().slow(0.5f);
+                    coll.gameObject.GetComponent<HealthSystem>().TakeDamageA(4);
+                    if (coll.gameObject.CompareTag("EnemyMelee") || coll.gameObject.CompareTag("EnemyRange"))
+                    {
+                        coll.gameObject.GetComponent<EnemyRange>().slow(0.5f);
+                    }
+                    Instantiate(iceExplosion, transform.position, Quaternion.identity);
+                    break;
+            }
+            Destroy(gameObject);
+        } else if (coll.gameObject.GetComponent<HealthSystem>().boss)
+        {
+            switch (color)
+            {
+                case 0:
+                    coll.gameObject.GetComponent<HealthSystem>().TakeDamageA(5);
+                    Instantiate(explosion, transform.position, Quaternion.identity);
+                    break;
+                case 1:
+                    coll.gameObject.GetComponent<HealthSystem>().TakeDamageA(6);
+                    //if (coll.gameObject.CompareTag("Boss") || coll.gameObject.CompareTag("Boss"))
+                    //{
+                    //    coll.gameObject.GetComponent<BossMovement>().FireDamage(1);
+                    //}
+                    Instantiate(fireExplosion, transform.position, Quaternion.identity);
+                    break;
+                case 2:
+                    coll.gameObject.GetComponent<HealthSystem>().TakeDamageA(4);
+                    //if (coll.gameObject.CompareTag("Boss") || coll.gameObject.CompareTag("Boss"))
+                    //{
+                    //    coll.gameObject.GetComponent<BossMovement>().slow(0.5f);
+                    //}
                     Instantiate(iceExplosion, transform.position, Quaternion.identity);
                     break;
             }
             Destroy(gameObject);
         }
+        //if (coll.gameObject.CompareTag("BossTriangule"))
+        //{
+        //    switch (color)
+        //    {
+        //        case 0:
+        //            coll.gameObject.GetComponent<BossMovement>().TakeDamage(5);
+        //            Instantiate(explosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 1:
+        //            coll.gameObject.GetComponent<BossMovement>().TakeDamage(6);
+        //            coll.gameObject.GetComponent<Enemy>().FireDamage(1);
+        //            Instantiate(fireExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 2:
+        //            coll.gameObject.GetComponent<BossMovement>().TakeDamage(4);
+        //            coll.gameObject.GetComponent<Enemy>().slow(0.5f);
+        //            Instantiate(iceExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //    }
+        //    Destroy(gameObject);
+        //}
+        //if (coll.gameObject.CompareTag("BossCube"))
+        //{
+        //    switch (color)
+        //    {
+        //        case 0:
+        //            coll.gameObject.GetComponent<BossCircle>().TakeDamage(5);
+        //            Instantiate(explosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 1:
+        //            coll.gameObject.GetComponent<BossCircle>().TakeDamage(6);
+        //            coll.gameObject.GetComponent<Enemy>().FireDamage(1);
+        //            Instantiate(fireExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 2:
+        //            coll.gameObject.GetComponent<BossCircle>().TakeDamage(4);
+        //            coll.gameObject.GetComponent<Enemy>().slow(0.5f);
+        //            Instantiate(iceExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //    }
+        //    Destroy(gameObject);
+        //}
+       
+        //if (coll.gameObject.CompareTag("Enemy") || coll.gameObject.CompareTag("EnemySmall"))
+        //{
+        //    switch (color)
+        //    {
+        //        case 0:
+        //            coll.gameObject.GetComponent<Enemy>().TakeDamage(5);
+        //            Instantiate(explosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 1:
+        //            coll.gameObject.GetComponent<Enemy>().TakeDamage(6);
+        //            coll.gameObject.GetComponent<Enemy>().FireDamage(1);
+        //            Instantiate(fireExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 2:
+        //            coll.gameObject.GetComponent<Enemy>().TakeDamage(4);
+        //            coll.gameObject.GetComponent<Enemy>().slow(0.5f);
+        //            Instantiate(iceExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //    }
+        //    Destroy(gameObject);
+        //}
+        //if (coll.gameObject.CompareTag("EnemyCircle"))
+        //{
+        //    switch (color)
+        //    {
+        //        case 0:
+        //            coll.gameObject.GetComponent<EnemyCircle>().TakeDamage(5);
+        //            Instantiate(explosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 1:
+        //            coll.gameObject.GetComponent<EnemyCircle>().TakeDamage(6);
+        //            Instantiate(fireExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 2:
+        //            coll.gameObject.GetComponent<EnemyCircle>().TakeDamage(4);
+        //            coll.gameObject.GetComponent<EnemyCircle>().slow(0.5f);
+        //            Instantiate(iceExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //    }
+        //    Destroy(gameObject);
+        //}
 
-        if (coll.gameObject.CompareTag("SmallEnemyCircle"))
-        {
-            switch (color)
-            {
-                case 0:
-                    coll.gameObject.GetComponent<SmallCircle>().TakeDamage(5);
-                    Instantiate(explosion, transform.position, Quaternion.identity);
-                    break;
-                case 1:
-                    coll.gameObject.GetComponent<SmallCircle>().TakeDamage(6);
-                    Instantiate(fireExplosion, transform.position, Quaternion.identity);
-                    break;
-                case 2:
-                    coll.gameObject.GetComponent<SmallCircle>().TakeDamage(4);
-                    Instantiate(iceExplosion, transform.position, Quaternion.identity);
-                    break;
-            }
-            Destroy(gameObject);
-        }
+        //if (coll.gameObject.CompareTag("SmallEnemyCircle"))
+        //{
+        //    switch (color)
+        //    {
+        //        case 0:
+        //            coll.gameObject.GetComponent<SmallCircle>().TakeDamage(5);
+        //            Instantiate(explosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 1:
+        //            coll.gameObject.GetComponent<SmallCircle>().TakeDamage(6);
+        //            Instantiate(fireExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 2:
+        //            coll.gameObject.GetComponent<SmallCircle>().TakeDamage(4);
+        //            Instantiate(iceExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //    }
+        //    Destroy(gameObject);
+        //}
 
-            if (coll.gameObject.CompareTag("EnemyTriangule"))
-        {
-            switch (color)
-            {
-                case 0:
-                    coll.gameObject.GetComponent<EnemyTriangule>().TakeDamage(5);
-                    Instantiate(explosion, transform.position, Quaternion.identity);
-                    break;
-                case 1:
-                    coll.gameObject.GetComponent<EnemyTriangule>().TakeDamage(6);
-                    Instantiate(fireExplosion, transform.position, Quaternion.identity);
-                    break;
-                case 2:
-                    coll.gameObject.GetComponent<EnemyTriangule>().TakeDamage(4);
-                    coll.gameObject.GetComponent<EnemyTriangule>().slow(0.5f);
-                    Instantiate(iceExplosion, transform.position, Quaternion.identity);
-                    break;
-            }
-            Destroy(gameObject);
-        }
+        //if (coll.gameObject.CompareTag("EnemyTriangule"))
+        //{
+        //    switch (color)
+        //    {
+        //        case 0:
+        //            coll.gameObject.GetComponent<EnemyTriangule>().TakeDamage(5);
+        //            Instantiate(explosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 1:
+        //            coll.gameObject.GetComponent<EnemyTriangule>().TakeDamage(6);
+        //            Instantiate(fireExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //        case 2:
+        //            coll.gameObject.GetComponent<EnemyTriangule>().TakeDamage(4);
+        //            coll.gameObject.GetComponent<EnemyTriangule>().slow(0.5f);
+        //            Instantiate(iceExplosion, transform.position, Quaternion.identity);
+        //            break;
+        //    }
+        //    Destroy(gameObject);
+        //}
     }
 
     private void OnBecameInvisible()
