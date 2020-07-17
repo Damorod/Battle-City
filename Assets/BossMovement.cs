@@ -67,7 +67,7 @@ public class BossMovement : MonoBehaviour
             }
             anim.ResetTrigger("Attacking");
             anim.SetBool("isRunning", false);
-            if (hitInfo.collider != null && !hitInfo.collider.CompareTag("ExtrasTileMap"))
+            if (hitInfo && hitInfo.collider != null && !hitInfo.collider.CompareTag("ExtrasTileMap"))
             {
                
 

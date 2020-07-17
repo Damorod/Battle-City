@@ -44,10 +44,10 @@ public class EnemyRange : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        Debug.Log(Vector3.Distance(transform.position, player.transform.position) > 6);
         target = inicial;
 
-        if (healthSystem.GetCurrentHealth() < 0)
+        if (healthSystem.GetCurrentHealth() <= 0)
         {
             shake.shaker();
             Instantiate(deathEfect, transform.position, Quaternion.identity);
@@ -70,15 +70,15 @@ public class EnemyRange : MonoBehaviour
             }
             barril.transform.up = player.transform.position - barril.transform.position;
             anim.ResetTrigger("isAttacking");
-            RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up, 7);
-            if (hitInfo.collider != null && !hitInfo.collider.CompareTag("ExtrasTileMap"))
+            RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up);
+            if (hitInfo && hitInfo.collider != null && !hitInfo.collider.CompareTag("ExtrasTileMap"))
             {
-                if (Vector3.Distance(transform.position, player.transform.position) >= 2 && !hitInfo.collider.CompareTag("Enemy"))                 
+                if (Vector3.Distance(transform.position, player.transform.position) >= 10)                 
                 {
                     anim.SetBool("isRunning", true);
                     move(player.transform.position, speed);
                 }
-                else if (Vector3.Distance(transform.position, player.transform.position) < 1.8f && !hitInfo.collider.CompareTag("Enemy"))
+                else if (Vector3.Distance(transform.position, player.transform.position) < 5f && !hitInfo.collider.CompareTag("Enemy"))
                 {
                     anim.SetBool("isRunning", true);
                     move(player.transform.position, -speed);
@@ -87,7 +87,7 @@ public class EnemyRange : MonoBehaviour
                 {
                     anim.SetBool("isRunning", false);
                 }
-                if ((hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield")))
+                if ((hitInfo.collider.CompareTag("Player") || hitInfo.collider.CompareTag("Shield")) && Vector3.Distance(transform.position, player.transform.position) <= 18)
                 {
                     anim.SetTrigger("isAttacking");
                 }

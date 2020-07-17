@@ -48,7 +48,7 @@ public class EnemyMelee : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
         //GetComponent<SpriteRenderer>().flipX = player.transform.position.x < transform.position.x;
-        if (healthSystem.GetCurrentHealth() < 0)
+        if (healthSystem.GetCurrentHealth() <= 0)
         {
             shake.shaker();
             Instantiate(deathEfect, transform.position, Quaternion.identity);
@@ -59,16 +59,17 @@ public class EnemyMelee : MonoBehaviour
         else
         {
             barril.transform.up = player.transform.position - barril.transform.position;
-            RaycastHit2D hit = Physics2D.Raycast(barril.position, barril.up, 5);
+            RaycastHit2D hit = Physics2D.Raycast(barril.position, barril.up);
             anim.SetBool("isRunning", false);
+
             anim.ResetTrigger("Attacking");
             if (hit.collider != null && !hit.collider.CompareTag("ExtrasTileMap"))
             {
-                if (Vector3.Distance(transform.position, player.transform.position) > 1.3f && !hit.collider.CompareTag("EnemyTriangule"))
+                if (Vector3.Distance(transform.position, player.transform.position) > 1.9f && !hit.collider.CompareTag("EnemyTriangule"))
                 {
                     anim.SetBool("isRunning", true);
                     move(player.transform.position, speed);
-                }else if(Vector3.Distance(transform.position, player.transform.position) <= 1.3f)
+                }else if(Vector3.Distance(transform.position, player.transform.position) <= 1.9f)
                 {
                     anim.SetBool("isRunning", false);
                     anim.SetTrigger("Attacking");

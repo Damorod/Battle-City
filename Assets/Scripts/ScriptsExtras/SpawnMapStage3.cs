@@ -4,94 +4,44 @@ using UnityEngine;
 
 public class SpawnMapStage3 : MonoBehaviour
 {
-    float spawnTime = 0.5f;
-    public GameObject enemy;
-
-    public GameObject bossCube;
-
-    public List<GameObject> test;
+    public GameObject bossOne;
+    public GameObject bossOneLife;
 
     public GameObject shield;
     public GameObject health;
-    public GameObject bossLife;
 
-    float randomShield;
-    int maxShield;
-    float randomHealth;
-    int maxHealth;
+    public float randomShield;
+    public float randomHealth;
 
-    bool bossSpawned;
+    public bool bossSpawned;
 
-    public List<int> activeEnemys;
+    public int maxHealth;
+    public int maxShield;
 
     public int maxEnemys = 0;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(sapwnTimeCircle());
         randomHealth = Random.Range(0, 30);
         randomShield = Random.Range(0, 30);
+
     }
+
     private void FixedUpdate()
     {
-        if (GameObject.FindGameObjectWithTag("Enemy") == null && !bossSpawned)
+        if ((GameObject.FindGameObjectsWithTag("EnemyRange").Length == 0 && GameObject.FindGameObjectsWithTag("EnemyMelee").Length == 0)
+            && !bossSpawned && bossOne != null)
         {
-            bossCube.SetActive(true);
-            bossLife.SetActive(true);
             bossSpawned = true;
+            bossOne.SetActive(true);
+            bossOneLife.SetActive(true);
         }
-
-        if (maxHealth <= 2)
+        else if (bossSpawned)
         {
-            if ((int)Time.time == randomHealth)
+            if (GameObject.FindGameObjectsWithTag("BossTriangule").Length == 0)
             {
-                randomHealth = Random.Range(randomHealth, 30);
-                maxHealth++;
-                Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
-                Instantiate(health, positionSpawn, Quaternion.identity);
+                GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>().bossDead = true;
             }
         }
-        if (maxShield <= 2)
-        {
-            if ((int)Time.time == randomShield)
-            {
-                randomShield = Random.Range(randomShield, 30);
-                maxShield++;
-                Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
-                Instantiate(shield, positionSpawn, Quaternion.identity);
-            }
-        }
-    }
-    // Update is called once per frame
-    void LateUpdate()
-    {
-    }
-
-    void spawnCircle()
-    {
-        int i = 0;
-        if(maxEnemys < 10)
-        {
-            Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
-            Collider2D hits = Physics2D.OverlapCircle(new Vector3(positionSpawn.x, positionSpawn.y, 0), 0.1f);
-            if (hits == null)
-            {
-                GameObject spawned = Instantiate(enemy, positionSpawn, Quaternion.identity) as GameObject;
-                spawned.gameObject.GetComponent<EnemyRange>().player = GameObject.FindGameObjectWithTag("Player");
-                spawned.gameObject.GetComponent<EnemyRange>().setNumber(i);
-                maxEnemys++;
-                i++;
-            }
-        }
-    }
-
-    IEnumerator sapwnTimeCircle()
-    {
-        while (maxEnemys < 10)
-        {
-            spawnCircle();
-            yield return new WaitForSeconds(spawnTime);
-        }
-
     }
 }

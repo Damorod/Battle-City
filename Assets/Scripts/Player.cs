@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     public HealthSystem health;
 
     public ShieldBar sh;
-    public int maxShield = 70;
+    public int maxShield;
     public int currentShield;
 
     public Animator anim;
@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     {
         r = this.GetComponent<Rigidbody2D>();
         shield.SetActive(false);
+        maxShield = 80;
         currentShield = maxShield;
         health.SetMaxHealth(100);
         typeWeapon.Add("Normal");
@@ -53,14 +54,23 @@ public class Player : MonoBehaviour
             if(Input.GetKey(KeyCode.Alpha1) && typeWeapon.Contains("Normal"))
             {
                 projectile.GetComponent<Projectile>().changeColor(0);
+                inv.slots[0].gameObject.GetComponent<Image>().color = Color.white;
+                inv.slots[1].gameObject.GetComponent<Image>().color = Color.grey;
+                inv.slots[2].gameObject.GetComponent<Image>().color = Color.grey;
             }
             if (Input.GetKey(KeyCode.Alpha2) && typeWeapon.Contains("Fire"))
             {
                 projectile.GetComponent<Projectile>().changeColor(1);
+                inv.slots[1].gameObject.GetComponent<Image>().color = Color.white;
+                inv.slots[0].gameObject.GetComponent<Image>().color = Color.grey;
+                inv.slots[2].gameObject.GetComponent<Image>().color = Color.grey;
             }
             if (Input.GetKey(KeyCode.Alpha3) && typeWeapon.Contains("Ice"))
             {
                 projectile.GetComponent<Projectile>().changeColor(2);
+                inv.slots[2].gameObject.GetComponent<Image>().color = Color.white;
+                inv.slots[0].gameObject.GetComponent<Image>().color = Color.grey;
+                inv.slots[1].gameObject.GetComponent<Image>().color = Color.grey;
             }
         }
        
@@ -93,7 +103,9 @@ public class Player : MonoBehaviour
         }
         else
         {
-            shield.SetActive(false);
+            shieldOn = false;
+            //shield.SetActive(false);
+            Destroy(shield);
         }
         
 
@@ -154,7 +166,7 @@ public class Player : MonoBehaviour
 
     public void AddShield(int heal)
     {
-        currentShield += heal;
+        currentShield = Mathf.Clamp(currentShield + heal, 0, 100);
         sh.SetShield(currentShield);
     }
 

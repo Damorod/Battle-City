@@ -22,6 +22,9 @@ TagManager:
   - LevelLoader
   - EnemyRange
   - EnemyMelee
+  - MenuWon
+  - Timer
+  - Item
   layers:
   - Default
   - TransparentFX

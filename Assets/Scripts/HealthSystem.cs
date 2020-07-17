@@ -36,7 +36,8 @@ public class HealthSystem : MonoBehaviour
 
     public void Heal(int health)
     {
-        currentHealth += health;
+
+        currentHealth = Mathf.Clamp(GetCurrentHealth() + health, 0, 100);
     }
 
     public void TakeDamage(int dmg)

@@ -9,8 +9,11 @@ public class RegenHealth : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().AddHealth(50);
-            Destroy(gameObject);
+            if(collision.gameObject.GetComponent<Player>().health.GetCurrentHealth() < 100)
+            {
+                collision.gameObject.GetComponent<Player>().AddHealth(30);
+                Destroy(gameObject);
+            }
         }
     }
 }

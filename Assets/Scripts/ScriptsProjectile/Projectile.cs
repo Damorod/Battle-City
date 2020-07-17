@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.CompareTag("ExtrasTileMap") || coll.gameObject.CompareTag("WallTileMap"))
+        if (coll != null && coll.gameObject.CompareTag("ExtrasTileMap") || coll.gameObject.CompareTag("WallTileMap"))
         {
             switch (color)
             {
@@ -47,7 +47,8 @@ public class Projectile : MonoBehaviour
             }
             Destroy(gameObject);
         }
-        else if (coll.gameObject.GetComponent<HealthSystem>().boss == false && !coll.gameObject.CompareTag("Player"))
+        else if (coll != null && !coll.gameObject.GetComponent<HealthSystem>().boss && !coll.gameObject.CompareTag("Player") 
+            && !coll.gameObject.CompareTag("Item"))
         {
             switch (color)
             {
@@ -73,7 +74,7 @@ public class Projectile : MonoBehaviour
                     break;
             }
             Destroy(gameObject);
-        } else if (coll.gameObject.GetComponent<HealthSystem>().boss)
+        } else if (coll != null && coll.gameObject.GetComponent<HealthSystem>().boss && !coll.gameObject.CompareTag("Item"))
         {
             switch (color)
             {

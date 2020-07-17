@@ -13,7 +13,9 @@ public class IceProjectile : MonoBehaviour
         {
             collision.gameObject.GetComponent<Player>().typeWeapon.Add("Ice");
             collision.gameObject.GetComponent<Player>().projectile.gameObject.GetComponent<Projectile>().changeColor(2);
-            collision.gameObject.GetComponent<Player>().inv.slots[2].gameObject.GetComponent<Image>().color = Color.cyan;
+            collision.gameObject.GetComponent<Player>().inv.slots[2].gameObject.GetComponent<Image>().color = Color.white;
+            collision.gameObject.GetComponent<Player>().inv.slots[0].gameObject.GetComponent<Image>().color = Color.grey;
+            collision.gameObject.GetComponent<Player>().inv.slots[1].gameObject.GetComponent<Image>().color = Color.grey;
             Destroy(gameObject);
         }
     }

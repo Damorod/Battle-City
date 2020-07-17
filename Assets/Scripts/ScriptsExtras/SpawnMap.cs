@@ -44,61 +44,72 @@ public class SpawnMap : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(GameObject.FindGameObjectWithTag("EnemyRange"));
-        if ((GameObject.FindGameObjectsWithTag("EnemyRange").Length == 0 && GameObject.FindGameObjectsWithTag("EnemyMelee").Length == 0)
-            && !bossSpawned && bossOne != null && bossTwo != null)
+        //Debug.Log(GameObject.FindGameObjectWithTag("EnemyRange"));
+        //if ((GameObject.FindGameObjectsWithTag("EnemyRange").Length == 0 && GameObject.FindGameObjectsWithTag("EnemyMelee").Length == 0)
+        //    && !bossSpawned && bossOne != null && bossTwo != null)
+        //{
+        //    bossSpawned = true;
+        //    bossOne.SetActive(true);
+        //    bossOneLife.SetActive(true);
+        //    bossTwo.SetActive(true);
+        //    bossTwoLife.SetActive(true);
+        //}
+        //else if(bossSpawned)
+        //{
+        //    if(GameObject.FindGameObjectsWithTag("BossTriangule").Length == 0)
+        //    {
+        //        GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>().bossDead = true;
+        //    }
+        //}
+        if (!fireSpawned)
         {
-            bossSpawned = true;
-            bossOne.SetActive(true);
-            bossOneLife.SetActive(true);
-            bossTwo.SetActive(true);
-            bossTwoLife.SetActive(true);
-        }
-        else if(bossSpawned)
-        {
-            if(GameObject.FindGameObjectsWithTag("BossTriangule").Length == 0)
+            if ((int)Time.time == randomFire)
             {
-                GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>().bossDead = true;
+                fireSpawned = true;
+                RandomSpwan(fire);
             }
         }
-        //if (!fireSpawned)
-        //{
-        //    if ((int)Time.time == randomFire)
-        //    {
-        //        fireSpawned = true;
-        //        Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
-        //        Instantiate(fire, positionSpawn, Quaternion.identity);
-        //    }
-        //}
-        //if (maxHealth < 2)
-        //{
-        //    if ((int)Time.time == (int)randomHealth)
-        //    {
-        //        randomHealth = Random.Range(randomHealth, 30);
-        //        maxHealth++;
-        //        Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
-        //        Instantiate(health, positionSpawn, Quaternion.identity);
-        //    }
-        //}
-        //if (!iceSpawned)
-        //{
-        //    if ((int)Time.time == randomIce)
-        //    {
-        //        iceSpawned = true;
-        //        Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
-        //        Instantiate(ice, positionSpawn, Quaternion.identity);
-        //    }
-        //}
-        //if (maxShield < 2)
-        //{
-        //    if ((int)Time.time == (int)randomShield)
-        //    {
-        //        randomShield = Random.Range(randomShield, 30);
-        //        maxShield++;
-        //        Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
-        //        Instantiate(shield, positionSpawn, Quaternion.identity);
-        //    }
-        //}
+        if (maxHealth < 2)
+        {
+            if ((int)Time.time == (int)randomHealth)
+            {
+                randomHealth = Random.Range(randomHealth, 30);
+                maxHealth++;
+                RandomSpwan(health);
+            }
+        }
+        if (!iceSpawned)
+        {
+            if ((int)Time.time == randomIce)
+            {
+                iceSpawned = true;
+                RandomSpwan(ice);
+            }
+        }
+        if (maxShield < 2)
+        {
+            if ((int)Time.time == (int)randomShield)
+            {
+                randomShield = Random.Range(randomShield, 30);
+                maxShield++;
+                RandomSpwan(shield);
+            }
+        }
+    }
+
+    public void RandomSpwan(GameObject type)
+    {
+        Vector2 positionSpawn = new Vector2(Random.Range(-14, 14), Random.Range(-9, 5));
+        Collider2D hits = Physics2D.OverlapCircle(new Vector3(positionSpawn.x, positionSpawn.y, 0), 0.1f);
+        if(hits == null)
+        {
+            Instantiate(type, positionSpawn, Quaternion.identity);
+        }
+        else
+        {
+            RandomSpwan(type);
+        }
+
     }
     // Update is called once per frame
     void LateUpdate()

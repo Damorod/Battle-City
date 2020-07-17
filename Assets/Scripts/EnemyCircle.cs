@@ -58,7 +58,7 @@ public class EnemyCircle : MonoBehaviour
             }
             barril.transform.up = player.transform.position - barril.transform.position;
             RaycastHit2D hitInfo = Physics2D.Raycast(barril.position, barril.up, 2);
-            if (hitInfo.collider != null && (hitInfo.collider.CompareTag("ExtrasTileMap") || hitInfo.collider.CompareTag("EnemyCircle")))
+            if (hitInfo && hitInfo.collider != null && (hitInfo.collider.CompareTag("ExtrasTileMap") || hitInfo.collider.CompareTag("EnemyCircle")))
             {
                 target = transform.position;
             }
